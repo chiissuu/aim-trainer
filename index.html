@@ -1,0 +1,63 @@
+<!DOCTYPE html>       <!-- Indica al navegador que debe interpretar el documento como HTML -->
+<html lang="es">        <!-- Atributo lang="es" indica que el idioma principal del contenido es español -->
+
+  <head>
+    <meta charset="UTF-8">      <!-- Codificación del texto, interprestación del navegador | UTF-8 permite representar tildes, la ñ, símbolos y muchos otros -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- name="viewport": indica que estamos configurando el área donde el navegador muestra la página | width=device-width: hace que su anchura corresponda al ancho del dispositivo, medido en píxeles CSS | initial-scale=1.0: establece la escala inicial al 100 % -->
+    <title>Aim Trainer - chiissuu</title>
+    <link rel="stylesheet" href="styles.css">     <!-- rel="stylesheet": indica que el archivo enlazado es una hoja de estilos | href="styles.css": indica nuestro archivo css -->
+    <script src="app.js" defer></script>    <!-- Enlazar nuestro codigo JS | defer: permite descargarlo mientras el navegador procesa el HTML -->
+  </head>
+
+
+  <body>
+
+    <main class="entrenador">
+      <header class="cabecera">
+        <p class="etiqueta">M1 · El Despertar del DOM</p>
+        <h1>Aim Trainer<span>.</span></h1>
+        <p class="descripcion">Entrena tu puntería, un objetivo a la vez.</p>
+      </header>
+
+      <!-- Panel de entrenamiento -->
+      <section class="panel" aria-labelledby="titulo-sesion">
+        <div class="encabezado-sesion">
+          <h2 id="titulo-sesion">Zona de entrenamiento</h2>
+          <span class="formato">4 × 4</span>
+        </div>
+
+        <!-- Marcador de aciertos y tiempo restante -->
+        <dl class="marcador">
+          <div>
+            <dt>Aciertos</dt>
+            <dd id="aciertos">0</dd>
+          </div>
+          <div>
+            <dt>Tiempo restante</dt>
+            <dd><span id="tiempo">60</span> <span class="unidad">s</span></dd>
+          </div>
+        </dl>
+
+        <!-- Tablero: sus 16 casillas se crean desde app.js -->
+        <div id="tablero" class="tablero" role="group" aria-label="Tablero de 4 filas y 4 columnas"></div>
+
+        <!-- Estado de la partida y control de inicio -->
+        <div class="controles">
+          <p id="estado">Tablero preparado. El juego estará disponible en la siguiente fase.</p>
+          <button id="iniciar" type="button" disabled>Iniciar juego</button>
+        </div>
+      </section>
+
+      <!-- Instrucciones del juego -->
+      <section class="instrucciones" aria-labelledby="titulo-instrucciones">
+        <h2 id="titulo-instrucciones">Cómo se jugará</h2>
+        <p>Tendrás 60 segundos para acertar tantos objetivos como puedas. Habrá cuatro a la vez: cada acierto sumará un punto y hará aparecer otro en una casilla libre.</p>
+      </section>
+
+      <!-- Aviso cuando JavaScript está desactivado -->
+      <noscript>Activa JavaScript para que se genere el tablero.</noscript>
+      <!-- Pie de página -->
+      <footer>Prototipo inicial · HTML, CSS y JavaScript puro</footer>
+    </main>
+  </body>
+</html>

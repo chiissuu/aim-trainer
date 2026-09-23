@@ -1,0 +1,403 @@
+/* ==================================================
+   GUÍA RÁPIDA PARA LEER CSS
+   ==================================================
+
+   ESTRUCTURA DE UNA REGLA
+
+   selector {
+     propiedad: valor;
+   }
+
+   El selector indica a qué elementos se aplica la regla.
+   Las llaves { } delimitan el bloque de estilos.
+   Dentro, cada declaración asigna un valor a una propiedad.
+   Ejemplo: color: green; establece el color del texto.
+
+   .nombre — SELECTOR DE CLASE
+   .casilla selecciona todos los elementos con class="casilla".
+   Una clase se puede reutilizar en varios elementos.
+   Un elemento puede tener varias clases: class="casilla activa".
+
+   #nombre — SELECTOR DE ID
+   #iniciar selecciona el elemento con id="iniciar".
+   Cada id debe ser único dentro del documento HTML.
+   Aquí # forma parte del selector; en color: #183a33; indica
+   un color hexadecimal, no un id. Importa dónde aparece.
+
+   * — SELECTOR UNIVERSAL
+   Selecciona todos los elementos, independientemente de su etiqueta.
+   Ejemplo: * { box-sizing: border-box; }
+
+   etiqueta — NOMBRE DE ETIQUETA SIN PREFIJO
+   Cuando escribes directamente el nombre de una etiqueta, sin un
+   prefijo como . o #, seleccionas todos los elementos de ese tipo.
+   h1 aplica estilos a todos los <h1>; button, a todos los <button>.
+   En CSS se escribe el nombre sin los signos < >.
+
+   :nombre — PSEUDOCLASE
+   En un selector, los dos puntos introducen una pseudoclase:
+   selecciona elementos según un estado o una condición especial.
+   :root selecciona el elemento raíz del documento (en HTML, <html>).
+   Se suele usar para definir variables CSS y estilos base de la página.
+   No selecciona todos los elementos como *; algunas propiedades,
+   como el color del texto, pueden heredarse desde el elemento raíz.
+   :hover selecciona un elemento cuando el puntero está sobre él.
+   #iniciar:disabled selecciona ese botón cuando está deshabilitado.
+
+   espacio — DESCENDIENTES
+   .instrucciones p selecciona los <p> dentro de un elemento
+   con class="instrucciones", incluso si hay elementos intermedios.
+
+   > — HIJOS DIRECTOS
+   .marcador > div selecciona solo los <div> que son hijos directos
+   del marcador, no otros <div> anidados a mayor profundidad.
+
+   @media — REGLAS CONDICIONALES
+   No es un selector de elementos. Agrupa reglas que solo se aplican
+   si se cumple una condición, como un ancho de pantalla determinado.
+
+   Una misma etiqueta puede coincidir con varios selectores.
+   Por ejemplo, <button id="iniciar"> coincide con button y #iniciar.
+   El navegador combina sus estilos; si una propiedad entra en
+   conflicto, la cascada decide qué declaración prevalece.
+   En reglas normales de este archivo, un id tiene más especificidad
+   que una clase, y una clase más que una etiqueta. Si empatan,
+   prevalece la declaración que aparece después.
+   ================================================== */
+
+/* ==================================================
+   1. BASE GENERAL DE LA PÁGINA
+   ================================================== */
+
+/* Elemento raíz <html>: tipografía y colores generales. */
+:root {
+  /* Lista de fuentes por preferencia: system-ui usa la del sistema; sans-serif es la alternativa genérica sin remates. */
+  font-family: system-ui, sans-serif;
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #183a33;
+  /* Color del fondo del elemento; no cambia el color del texto. */
+  background-color: #f3f5ef;
+}
+
+/* Todos los elementos: incluye borde y relleno en el tamaño indicado. */
+* {
+  /* border-box incluye padding y borde dentro del ancho y alto declarados; el margen queda fuera. */
+  box-sizing: border-box;
+}
+
+/* <body>: elimina el margen que añade el navegador por defecto. */
+body {
+  /* Espacio EXTERIOR: 0 elimina los márgenes en los cuatro lados. */
+  margin: 0;
+}
+
+/* ==================================================
+   2. CONTENEDOR PRINCIPAL
+   ================================================== */
+
+/* <main class="entrenador">: limita el ancho y centra el contenido. */
+.entrenador {
+  /* min() elige el menor de DOS valores separados por la coma:
+     1) 100% - 32px: ancho del contenedor padre menos 32 píxeles CSS.
+     2) 640px: límite superior que queremos para el contenido.
+     Si el padre mide 400px, compara 368px con 640px y usa 368px.
+     Si mide 1000px, compara 968px con 640px y usa 640px.
+     La resta es parte del primer valor, no un tercer parámetro.
+     Junto a margin horizontal auto deja 16px a cada lado en el caso estrecho.
+  */
+  width: min(100% - 32px, 640px);
+  /* Espacio EXTERIOR: 48px arriba y abajo; auto reparte el espacio horizontal libre entre ambos lados y centra este bloque. */
+  margin: 48px auto;
+}
+
+/* ==================================================
+   3. CABECERA — <header class="cabecera">
+   ================================================== */
+
+/* Cabecera que agrupa la etiqueta de misión, el título y la descripción. */
+.cabecera {
+  /* Espacio EXTERIOR debajo del elemento: 28px. */
+  margin-bottom: 28px;
+}
+
+/* <p class="etiqueta">: texto «M1 · El Despertar del DOM». */
+.etiqueta {
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #50645b;
+  /* Tamaño del texto: 0.8rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
+  font-size: 0.8rem;
+  /* Grosor de la letra: 400 es normal; 700 es negrita, según los pesos disponibles en la fuente. */
+  font-weight: 700;
+  /* Espacio adicional entre caracteres, relativo al tamaño de letra de este elemento (em). El valor positivo los separa. */
+  letter-spacing: 0.08em;
+  /* uppercase muestra el texto en mayúsculas sin modificar el texto original del HTML. */
+  text-transform: uppercase;
+}
+
+/* Todos los <h1>; aquí, el título principal «Aim Trainer». */
+h1 {
+  /* Espacio EXTERIOR: 8px arriba y abajo; 0 a izquierda y derecha. */
+  margin: 8px 0;
+  /* clamp(mínimo, preferido, máximo) recibe TRES valores:
+     2.5rem: mínimo, 2.5 veces el tamaño de fuente del elemento raíz.
+     8vw: tamaño preferido, el 8% del ancho de la ventana.
+     4rem: máximo, 4 veces el tamaño de fuente del elemento raíz.
+     El título crece con la ventana sin salir de esos límites.
+     Si la fuente raíz es 16px, los límites son 40px y 64px.
+  */
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  /* Espacio adicional entre caracteres, relativo al tamaño de letra de este elemento (em). El valor negativo los acerca. */
+  letter-spacing: -0.06em;
+}
+
+/* <span> dentro del <h1>: colorea el punto situado al final del título. */
+h1 span {
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #b64c2e;
+}
+
+/* <p class="descripcion">: frase situada debajo del título principal. */
+.descripcion {
+  /* Espacio EXTERIOR: 0 elimina los márgenes en los cuatro lados. */
+  margin: 0;
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #50645b;
+  /* Altura de cada línea: 1.6 veces el tamaño de su letra. Al no llevar unidad, se hereda como multiplicador. */
+  line-height: 1.6;
+}
+
+/* ==================================================
+   4. PANEL DE ENTRENAMIENTO
+   ================================================== */
+
+/* <section class="panel">: tarjeta que contiene el juego. */
+.panel {
+  /* Espacio INTERIOR entre contenido y borde. 24px en los cuatro lados. */
+  padding: 24px;
+  /* Tres componentes: 1px de grosor, solid para una línea continua y #d4ddd2 como color. */
+  border: 1px solid #d4ddd2;
+  /* Redondea las esquinas: el valor es el radio de la curva en cada esquina. */
+  border-radius: 20px;
+  /* Color del fondo del elemento; no cambia el color del texto. */
+  background-color: #ffffff;
+}
+
+/* <div class="encabezado-sesion">: alinea «Zona de entrenamiento» y «4 × 4». */
+.encabezado-sesion {
+  /* Activa Flexbox para distribuir los hijos directos; por defecto se colocan en una fila. */
+  display: flex;
+  /* Centra los hijos en el eje transversal; en esta fila flex, los alinea verticalmente. */
+  align-items: center;
+  /* space-between reparte el espacio horizontal sobrante entre los hijos; sitúa el primero y el último en los extremos. */
+  justify-content: space-between;
+  /* Separación de 12px entre filas y columnas de Grid, o entre elementos de Flexbox. No añade espacio en el borde exterior. */
+  gap: 12px;
+}
+
+/* Regla compartida por TODOS los <h2>: título del panel y título de instrucciones. */
+h2 {
+  /* Espacio EXTERIOR: 0 elimina los márgenes en los cuatro lados. */
+  margin: 0;
+  /* Tamaño del texto: 1rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
+  font-size: 1rem;
+}
+
+/* <span class="formato">: indicador «4 × 4» junto al título del panel. */
+.formato {
+  /* 0 impide que este elemento flex reduzca su ancho por falta de espacio en la fila. */
+  flex-shrink: 0;
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #50645b;
+  /* Tamaño del texto: 0.85rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
+  font-size: 0.85rem;
+}
+
+/* ==================================================
+   5. MARCADOR — aciertos y tiempo restante
+   ================================================== */
+
+/* <dl class="marcador">: distribuye las dos estadísticas en columnas. */
+.marcador {
+  /* Activa CSS Grid para distribuir los hijos directos en una cuadrícula. */
+  display: grid;
+  /* repeat(2, 1fr) repite 2 columnas. Cada 1fr recibe una parte igual del espacio disponible tras descontar los huecos; el contenido también puede imponer un mínimo. */
+  grid-template-columns: repeat(2, 1fr);
+  /* Separación de 12px entre filas y columnas de Grid, o entre elementos de Flexbox. No añade espacio en el borde exterior. */
+  gap: 12px;
+  /* Espacio EXTERIOR: 24px arriba y abajo; 0 a izquierda y derecha. */
+  margin: 24px 0;
+}
+
+/* Cada <div> hijo directo del marcador: tarjeta de una estadística. */
+.marcador > div {
+  /* Espacio INTERIOR entre contenido y borde. 16px en los cuatro lados. */
+  padding: 16px;
+  /* Redondea las esquinas: el valor es el radio de la curva en cada esquina. */
+  border-radius: 12px;
+  /* Color del fondo del elemento; no cambia el color del texto. */
+  background-color: #f3f5ef;
+}
+
+/* Todos los <dt>; aquí, las etiquetas «Aciertos» y «Tiempo restante». */
+dt {
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #50645b;
+  /* Tamaño del texto: 0.85rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
+  font-size: 0.85rem;
+}
+
+/* Todos los <dd>; aquí, los valores de aciertos y tiempo del marcador. */
+dd {
+  /* Tres valores de margen: 4px arriba, 0 a izquierda y derecha, 0 abajo. */
+  margin: 4px 0 0;
+  /* Tamaño del texto: 2rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
+  font-size: 2rem;
+  /* Grosor de la letra: 400 es normal; 700 es negrita, según los pesos disponibles en la fuente. */
+  font-weight: 700;
+  /* tabular-nums pide dígitos de igual anchura, si la fuente los admite, para estabilizar el marcador al cambiar los números. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* <span class="unidad">: letra «s» que acompaña al tiempo en segundos. */
+.unidad {
+  /* Tamaño del texto: 1rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
+  font-size: 1rem;
+  /* Grosor de la letra: 400 es normal; 700 es negrita, según los pesos disponibles en la fuente. */
+  font-weight: 400;
+}
+
+/* ==================================================
+   6. TABLERO Y CASILLAS
+   ================================================== */
+
+/* <div id="tablero" class="tablero">: cuadrícula de cuatro columnas. */
+.tablero {
+  /* Activa CSS Grid para distribuir los hijos directos en una cuadrícula. */
+  display: grid;
+  /* repeat(4, 1fr) repite 4 columnas. Cada 1fr recibe una parte igual del espacio disponible tras descontar los huecos; el contenido también puede imponer un mínimo. */
+  grid-template-columns: repeat(4, 1fr);
+  /* Separación de 8px entre filas y columnas de Grid, o entre elementos de Flexbox. No añade espacio en el borde exterior. */
+  gap: 8px;
+}
+
+/* Cada <button class="casilla"> creado en app.js: casilla cuadrada del tablero. */
+.casilla {
+  /* Relación ancho / alto preferida: 1 equivale a 1 / 1. Con el ancho de la cuadrícula y altura automática, la casilla queda cuadrada. */
+  aspect-ratio: 1;
+  /* Tres componentes: 1px de grosor, solid para una línea continua y #ced9ce como color. */
+  border: 1px solid #ced9ce;
+  /* Redondea las esquinas: el valor es el radio de la curva en cada esquina. */
+  border-radius: 12px;
+  /* Color del fondo del elemento; no cambia el color del texto. */
+  background-color: #edf1e9;
+}
+
+/* ==================================================
+   7. CONTROLES — estado e inicio de partida
+   ================================================== */
+
+/* <div class="controles">: espacio que agrupa el mensaje y el botón de inicio. */
+.controles {
+  /* Espacio EXTERIOR encima del elemento: 20px. */
+  margin-top: 20px;
+}
+
+/* <p id="estado">: mensaje sobre la disponibilidad o el estado de la partida. */
+#estado {
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #50645b;
+  /* Tamaño del texto: 0.9rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
+  font-size: 0.9rem;
+  /* Altura de cada línea: 1.6 veces el tamaño de su letra. Al no llevar unidad, se hereda como multiplicador. */
+  line-height: 1.6;
+}
+
+/* Regla compartida por TODOS los botones: inicio y casillas heredan la tipografía. */
+button {
+  /* inherit hace que las propiedades tipográficas incluidas en font tomen los valores del elemento padre. */
+  font: inherit;
+}
+
+/* <button id="iniciar">: tamaño y forma del botón «Iniciar juego». */
+#iniciar {
+  /* 100% ocupa todo el ancho del contenido del padre. Con border-box, incluye el padding y el borde del botón. */
+  width: 100%;
+  /* Altura mínima: puede crecer si el contenido necesita más espacio; no fija una altura máxima. */
+  min-height: 48px;
+  /* Espacio INTERIOR entre contenido y borde. 12px arriba y abajo; 20px a izquierda y derecha. */
+  padding: 12px 20px;
+  /* 0 elimina el borde. */
+  border: 0;
+  /* Redondea las esquinas: el valor es el radio de la curva en cada esquina. */
+  border-radius: 10px;
+  /* Grosor de la letra: 400 es normal; 700 es negrita, según los pesos disponibles en la fuente. */
+  font-weight: 700;
+}
+
+/* El mismo botón de inicio cuando tiene el atributo disabled (deshabilitado). */
+#iniciar:disabled {
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #526057;
+  /* Color del fondo del elemento; no cambia el color del texto. */
+  background-color: #e3e8e0;
+  /* not-allowed muestra un cursor de acción no permitida. El bloqueo real lo hace disabled en HTML o JavaScript. */
+  cursor: not-allowed;
+}
+
+/* ==================================================
+   8. INSTRUCCIONES DEL JUEGO
+   ================================================== */
+
+/* <section class="instrucciones">: separación respecto al panel de juego. */
+.instrucciones {
+  /* Espacio EXTERIOR encima del elemento: 24px. */
+  margin-top: 24px;
+}
+
+/* Párrafo dentro de las instrucciones: explicación de las reglas del juego. */
+.instrucciones p {
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #50645b;
+  /* Altura de cada línea: 1.7 veces el tamaño de su letra. Al no llevar unidad, se hereda como multiplicador. */
+  line-height: 1.7;
+}
+
+/* ==================================================
+   9. AVISO SIN JAVASCRIPT Y PIE DE PÁGINA
+   ================================================== */
+
+/* <noscript>: aviso visible cuando JavaScript está desactivado. */
+noscript {
+  /* Hace que el elemento genere una caja de bloque, que normalmente comienza en una línea nueva. */
+  display: block;
+  /* Espacio EXTERIOR encima del elemento: 16px. */
+  margin-top: 16px;
+}
+
+/* <footer>: texto final con el estado del prototipo y las tecnologías usadas. */
+footer {
+  /* Espacio EXTERIOR encima del elemento: 32px. */
+  margin-top: 32px;
+  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
+  color: #50645b;
+  /* Tamaño del texto: 0.8rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
+  font-size: 0.8rem;
+}
+
+/* ==================================================
+   10. PANTALLAS PEQUEÑAS — ancho de hasta 480 píxeles CSS
+   Estas reglas ajustan las anteriores cuando se cumple la condición.
+   ================================================== */
+@media (max-width: 480px) {
+  /* El mismo <main class="entrenador">: reduce sus márgenes verticales. */
+  .entrenador {
+    /* Espacio EXTERIOR: 24px arriba y abajo; auto reparte el espacio horizontal libre entre ambos lados y centra este bloque. */
+    margin: 24px auto;
+  }
+
+  /* La misma <section class="panel">: reduce el relleno interior. */
+  .panel {
+    /* Espacio INTERIOR entre contenido y borde. 16px en los cuatro lados. */
+    padding: 16px;
+  }
+}
