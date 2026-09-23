@@ -33,31 +33,40 @@
             <dd id="aciertos">0</dd>
           </div>
           <div>
-            <dt>Tiempo restante</dt>
+            <dt>Tiempo (próxima fase)</dt>
             <dd><span id="tiempo">60</span> <span class="unidad">s</span></dd>
           </div>
         </dl>
 
-        <!-- Tablero: sus 16 casillas se crean desde app.js -->
-        <div id="tablero" class="tablero" role="group" aria-label="Tablero de 4 filas y 4 columnas"></div>
+        <!-- Área de juego: borde exterior y casillas sin líneas visibles -->
+        <div class="zona-juego">
+          <!-- Tablero: sus 16 casillas se crean desde app.js -->
+          <div id="tablero" class="tablero" role="group" aria-label="Tablero de 4 filas y 4 columnas"></div>
 
-        <!-- Estado de la partida y control de inicio -->
+          <!-- Esta capa se oculta al iniciar; el tablero permanece visible -->
+          <div id="pantalla-inicio" class="pantalla-inicio">
+            <p>Cuatro objetivos. Afina tu puntería.</p>
+            <button id="iniciar" type="button" disabled>Iniciar entrenamiento</button>
+          </div>
+        </div>
+
+        <!-- Mensaje de estado, visible también durante el entrenamiento -->
         <div class="controles">
-          <p id="estado">Tablero preparado. El juego estará disponible en la siguiente fase.</p>
-          <button id="iniciar" type="button" disabled>Iniciar juego</button>
+          <p id="estado" role="status">Pulsa Iniciar entrenamiento. Esta versión permite entrenar sin temporizador.</p>
         </div>
       </section>
 
       <!-- Instrucciones del juego -->
       <section class="instrucciones" aria-labelledby="titulo-instrucciones">
-        <h2 id="titulo-instrucciones">Cómo se jugará</h2>
-        <p>Tendrás 60 segundos para acertar tantos objetivos como puedas. Habrá cuatro a la vez: cada acierto sumará un punto y hará aparecer otro en una casilla libre.</p>
+        <h2 id="titulo-instrucciones">Cómo jugar</h2>
+        <p>Pulsa las bolitas para sumar puntos. Hay cuatro a la vez y cada acierto crea otra en una casilla libre diferente. Pulsar una zona vacía no suma ni penaliza. También puedes seleccionar los objetivos con Tab y activarlos con Intro o Espacio.</p>
+        <p>El límite de 60 segundos y el reinicio llegarán en la siguiente fase. Por ahora, recarga la página para volver a empezar.</p>
       </section>
 
       <!-- Aviso cuando JavaScript está desactivado -->
       <noscript>Activa JavaScript para que se genere el tablero.</noscript>
       <!-- Pie de página -->
-      <footer>Prototipo inicial · HTML, CSS y JavaScript puro</footer>
+      <footer>Prototipo · Objetivos y aciertos · HTML, CSS y JavaScript puro</footer>
     </main>
   </body>
 </html>

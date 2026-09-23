@@ -270,6 +270,49 @@ dd {
    6. TABLERO Y CASILLAS
    ================================================== */
 
+/* Contenedor del tablero y de la pantalla de inicio superpuesta. */
+.zona-juego {
+  /* Referencia para posicionar la capa absoluta dentro de esta zona. */
+  position: relative;
+  /* Delimita todo el terreno de juego sin dibujar las casillas. */
+  border: 1px solid #ced9ce;
+  border-radius: 12px;
+  /* Un fondo suave distingue el área de juego del panel blanco. */
+  background-color: #f8faf5;
+}
+
+/* Capa que contiene el mensaje y el único botón de inicio. */
+.pantalla-inicio {
+  /* Se superpone sin añadir altura: el tablero sigue dando tamaño al contenedor. */
+  position: absolute;
+  /* Equivale a top, right, bottom y left a 0: cubre el área del contenedor. */
+  inset: 0;
+  /* Coloca mensaje y botón en columna y los centra en los dos ejes. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Espacio entre ambos elementos y separación respecto a los bordes. */
+  gap: 16px;
+  padding: 16px;
+  /* Centra el texto si ocupa más de una línea. */
+  text-align: center;
+}
+
+.pantalla-inicio p {
+  /* Evita sumar los márgenes del párrafo al espacio definido con gap. */
+  margin: 0;
+  /* Altura de línea proporcional al tamaño de letra. */
+  line-height: 1.5;
+}
+
+/* [hidden] selecciona la capa cuando JavaScript activa su atributo hidden.
+   Esta regla prevalece sobre display: flex. Solo ocultamos la capa,
+   nunca .tablero ni .zona-juego, para conservar el área y las dianas. */
+.pantalla-inicio[hidden] {
+  display: none;
+}
+
 /* <div id="tablero" class="tablero">: cuadrícula de cuatro columnas. */
 .tablero {
   /* Activa CSS Grid para distribuir los hijos directos en una cuadrícula. */
@@ -280,23 +323,58 @@ dd {
   gap: 8px;
 }
 
-/* Cada <button class="casilla"> creado en app.js: casilla cuadrada del tablero. */
+/* Cada <div class="casilla"> creado en app.js: contenedor cuadrado invisible para una diana. */
 .casilla {
-  /* Relación ancho / alto preferida: 1 equivale a 1 / 1. Con el ancho de la cuadrícula y altura automática, la casilla queda cuadrada. */
+  /* Conservamos la distribución invisible: display: none ocultaría también
+     las dianas. Esto se aplica tanto a .casilla como a .tablero. */
+  display: grid;
+  /* Centra la diana horizontal y verticalmente dentro de su casilla. */
+  place-items: center;
+  /* Relación ancho / alto de 1: mantiene cada casilla cuadrada. */
   aspect-ratio: 1;
-  /* Tres componentes: 1px de grosor, solid para una línea continua y #ced9ce como color. */
-  border: 1px solid #ced9ce;
-  /* Redondea las esquinas: el valor es el radio de la curva en cada esquina. */
-  border-radius: 12px;
-  /* Color del fondo del elemento; no cambia el color del texto. */
-  background-color: #edf1e9;
+  /* Sin bordes ni fondo visible, la cuadrícula deja de dibujarse. */
+  border: 0;
+  background-color: transparent;
+}
+
+/* <button class="objetivo">: diana creada desde JavaScript dentro de una casilla. */
+.objetivo {
+  /* Ocupa el 60% del ancho interior de su casilla. */
+  width: 60%;
+  /* Igual ancho y alto; el radio del 50% mantiene el botón circular. */
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* Elimina el relleno y borde predeterminados del botón. */
+  padding: 0;
+  border: 0;
+  /* El fondo transparente deja ver solo la imagen de la diana. */
+  background-color: transparent;
+  /* Ruta relativa a este archivo CSS, dentro del propio proyecto. */
+  background-image: url("assets/img/diana.png");
+  /* Ajusta la imagen completa al botón conservando sus proporciones. */
+  background-size: contain;
+  /* Evita repetir la imagen y la centra en ambos ejes. */
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Indica que la diana se puede pulsar. */
+  cursor: pointer;
+}
+
+
+
+
+/* Contorno visible al navegar con teclado; no cambia el tamaño del elemento. */
+.objetivo:focus-visible,
+#iniciar:focus-visible {
+  outline: 3px solid #183a33;
+  outline-offset: 4px;
 }
 
 /* ==================================================
    7. CONTROLES — estado e inicio de partida
    ================================================== */
 
-/* <div class="controles">: espacio que agrupa el mensaje y el botón de inicio. */
+/* <div class="controles">: espacio para el mensaje de estado debajo del tablero. */
 .controles {
   /* Espacio EXTERIOR encima del elemento: 20px. */
   margin-top: 20px;
@@ -312,16 +390,20 @@ dd {
   line-height: 1.6;
 }
 
-/* Regla compartida por TODOS los botones: inicio y casillas heredan la tipografía. */
+/* Regla compartida por TODOS los botones: inicio y objetivos heredan la tipografía. */
 button {
   /* inherit hace que las propiedades tipográficas incluidas en font tomen los valores del elemento padre. */
   font: inherit;
 }
 
-/* <button id="iniciar">: tamaño y forma del botón «Iniciar juego». */
+/* <button id="iniciar">: tamaño y forma del botón «Iniciar entrenamiento». */
 #iniciar {
-  /* 100% ocupa todo el ancho del contenido del padre. Con border-box, incluye el padding y el borde del botón. */
-  width: 100%;
+  /* Aspecto del botón cuando está disponible; :disabled lo sobrescribe. */
+  color: #ffffff;
+  background-color: #183a33;
+  cursor: pointer;
+  /* Ocupa el ancho disponible hasta un máximo de 260px. */
+  width: min(100%, 260px);
   /* Altura mínima: puede crecer si el contenido necesita más espacio; no fija una altura máxima. */
   min-height: 48px;
   /* Espacio INTERIOR entre contenido y borde. 12px arriba y abajo; 20px a izquierda y derecha. */
