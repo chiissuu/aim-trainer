@@ -365,7 +365,9 @@ dd {
 /* Contorno visible al navegar con teclado; no cambia el tamaño del elemento. */
 .objetivo:focus-visible,
 #iniciar:focus-visible,
-#reiniciar:focus-visible {
+#reiniciar:focus-visible,
+#ver-clasificacion:focus-visible,
+#alias:focus-visible {
   outline: 3px solid #183a33;
   outline-offset: 4px;
 }
@@ -440,6 +442,112 @@ button {
 
 /* Solo se muestra durante una partida activa. */
 #reiniciar[hidden] {
+  display: none;
+}
+
+/* ==================================================
+   RESULTADO, ALIAS Y CLASIFICACIÓN — dentro de la pantalla central
+   ================================================== */
+
+/* En pantallas pequeñas, el resultado puede desplazarse dentro del tablero. */
+.pantalla-inicio.resultado {
+  /* Empieza arriba para que el contenido no quede recortado al centrarlo. */
+  justify-content: flex-start;
+  /* Permite desplazamiento vertical solo si el contenido supera la altura. */
+  overflow-y: auto;
+}
+
+.pantalla-inicio.resultado > * {
+  /* Evita que Flexbox comprima el formulario o la tabla para hacerlos caber. */
+  flex-shrink: 0;
+}
+
+.formulario-alias {
+  /* Ordena etiqueta, campo, ayuda y botón en una columna. */
+  display: grid;
+  gap: 10px;
+  /* Limita su anchura sin desbordar una pantalla estrecha. */
+  width: min(100%, 320px);
+  text-align: left;
+}
+
+#alias {
+  /* Ocupa el formulario; min-width evita el mínimo intrínseco del input. */
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #50645b;
+  border-radius: 8px;
+  /* Hereda la letra; 1rem facilita la lectura del campo. */
+  font: inherit;
+  font-size: 1rem;
+}
+
+#error-alias {
+  /* El mensaje explica el error, además de señalarlo mediante el color. */
+  color: #9b2828;
+}
+
+#ver-clasificacion {
+  /* Botón principal del formulario: envío sin recargar la página. */
+  padding: 12px;
+  border: 0;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #183a33;
+  cursor: pointer;
+}
+
+.clasificacion {
+  width: 100%;
+}
+
+.clasificacion h3 {
+  margin: 0 0 8px;
+}
+
+.clasificacion p,
+#ayuda-alias,
+#error-alias {
+  font-size: 0.85rem;
+}
+
+.clasificacion table {
+  width: 100%;
+  /* Une los bordes contiguos para que no aparezcan líneas dobles. */
+  border-collapse: collapse;
+  /* Reparte el espacio según las columnas, sin crecer por un alias largo. */
+  table-layout: fixed;
+  margin: 12px 0;
+}
+
+.clasificacion caption {
+  margin-bottom: 8px;
+}
+
+.clasificacion th,
+.clasificacion td {
+  padding: 8px 4px;
+  border-bottom: 1px solid #ced9ce;
+  /* Permite partir un alias largo aunque no contenga espacios. */
+  overflow-wrap: anywhere;
+}
+
+.clasificacion th:nth-child(2) {
+  /* Reserva la mitad del ancho al alias; nth-child(2) indica la segunda celda. */
+  width: 50%;
+}
+
+.fila-usuario {
+  /* La etiqueta «(tú)» identifica la fila también sin depender del color. */
+  background-color: #e3ecdc;
+  font-weight: 700;
+}
+
+/* hidden debe prevalecer sobre display: grid del formulario. */
+#formulario-alias[hidden],
+#clasificacion[hidden],
+#iniciar[hidden] {
   display: none;
 }
 

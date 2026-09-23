@@ -6,15 +6,15 @@ Juego de puntería en una cuadrícula de 4 × 4, construido con HTML, CSS y Java
 
 ## Estado actual
 
-Fase 3 implementada: partidas de 60 segundos, resultado final y reinicio. Pendiente de revisión del alumno antes del tercer commit. La fase 2 está guardada en el commit `da6dc15`.
+Fase 4 implementada: formulario de alias y clasificación local de demostración. Pendiente de revisión del alumno. La fase 3 está guardada en el commit `283a8b2`.
 
 Al iniciar aparecen cuatro dianas en casillas distintas de una cuadrícula invisible de 4 × 4. Cada acierto suma un punto y sustituye el objetivo en otra casilla libre. Los clics vacíos no suman ni penalizan todavía.
 
-El tiempo se calcula a partir de una hora de finalización. Al llegar a cero se bloquean los aciertos, se retiran las dianas y aparece «Fin · XX puntos», con el botón «Volver a jugar». Un clic recibido fuera de plazo no puntúa aunque el refresco del contador se haya retrasado.
+El tiempo se calcula a partir de una hora de finalización. Al llegar a cero se bloquean los aciertos, se retiran las dianas y aparece «Fin · XX puntos», con un formulario de alias. Tras enviar un nombre válido se muestra la clasificación y el botón «Volver a jugar». Un clic recibido fuera de plazo no puntúa aunque el refresco del contador se haya retrasado.
 
-«Reiniciar partida», debajo del tablero, descarta la partida en curso y comienza otra con cero puntos, 60 segundos y cuatro objetivos nuevos. Cada inicio cancela el temporizador anterior. El botón central permite volver a jugar después del final sin recargar la página.
+«Reiniciar partida», debajo del tablero, descarta la partida en curso y comienza otra con cero puntos, 60 segundos y cuatro objetivos nuevos. Cada inicio cancela el temporizador anterior. El botón central permite volver a jugar después de ver la clasificación, sin recargar la página.
 
-Los objetivos conservan sus nombres accesibles y su activación con teclado. El foco pasa del inicio a una diana y, si estaba en los controles de juego al terminar, vuelve al botón central.
+Los objetivos conservan sus nombres accesibles y su activación con teclado. El foco pasa del inicio a una diana y, si estaba en los controles de juego al terminar, pasa al campo de alias. Al enviar el formulario, el foco se sitúa en el título de la clasificación.
 
 ## Cómo probarlo
 
@@ -35,7 +35,7 @@ Abre `index.html` en un navegador con JavaScript activado. También puedes usar 
 - [x] Cuatro objetivos simultáneos en casillas diferentes.
 - [x] Un punto por acierto y aparición de un nuevo objetivo en una casilla libre distinta de la anterior.
 - [x] Partidas de 60 segundos, final y reinicio.
-- [ ] Formulario de alias y clasificación local de demostración (fase 4).
+- [x] Formulario de alias y clasificación local de demostración (fase 4).
 - [ ] Contador de fallos y porcentaje de precisión.
 - [ ] Modo oscuro activado mediante una tecla secreta.
 - [x] Incorporar un título gráfico creado personalmente por el alumno.
@@ -44,9 +44,24 @@ Abre `index.html` en un navegador con JavaScript activado. También puedes usar 
 
 La configuración de partidas y las mejores marcas locales son ampliaciones pendientes de decidir después de completar la base.
 
+## Clasificación de demostración
+
+Al terminar, introduce un alias de entre 1 y 20 caracteres. Se eliminan los espacios iniciales y finales; no se acepta un nombre formado solo por espacios. El botón «Ver clasificación» muestra cinco participantes:
+
+| Rival ficticio | Puntos |
+| --- | ---: |
+| Enrique Pastor | 60 |
+| Mario Vaquerizo | 53 |
+| Peereira7 | 47 |
+| Peterbot | 36 |
+
+La quinta entrada es tu resultado. La tabla se ordena de mayor a menor puntuación; en empate, tu fila va después del rival con los mismos puntos. Se destaca con color y «(tú)». Un alias igual al de un rival no cambia su identificación como usuario.
+
+No es una clasificación online ni un historial persistente: se genera para la partida recién terminada y no usa `localStorage`. Al volver a jugar o recargar desaparece el resultado anterior. Reiniciar una partida en curso no la registra.
+
 ## Comprobaciones de esta fase
 
-Fase 2 aceptada por el alumno. Para la fase 3, revisión manual pendiente:
+Fases 2 y 3 guardadas por el alumno. Lista de regresión del juego y revisión manual de la fase 4:
 
 - [ ] Iniciar muestra cuatro objetivos, 0 puntos y 60 segundos.
 - [ ] Cada acierto suma uno y mantiene cuatro objetivos en posiciones distintas.
@@ -54,11 +69,18 @@ Fase 2 aceptada por el alumno. Para la fase 3, revisión manual pendiente:
 - [ ] No se pueden sumar puntos después del final.
 - [ ] Reiniciar durante la partida restablece los puntos, los 60 segundos y los objetivos.
 - [ ] Reiniciar varias veces no acelera el contador ni duplica los objetivos.
-- [ ] Volver a jugar funciona después de terminar, sin recargar.
+- [ ] Al terminar aparece el formulario de alias; un nombre vacío o formado solo por espacios muestra un error.
+- [ ] Un alias válido muestra exactamente cinco filas, con los cuatro rivales acordados y el usuario destacado.
+- [ ] Se ordenan los puntos de mayor a menor y los empates dejan al usuario detrás del rival.
+- [ ] El alias se muestra como texto, sin interpretar etiquetas HTML.
+- [ ] Volver a jugar funciona después de la clasificación y elimina el resultado anterior.
+- [ ] En una pantalla pequeña se puede desplazar el resultado hasta llegar al botón de nueva partida.
 - [ ] La navegación con Tab, Intro y Espacio funciona y el foco sigue siendo visible.
 - [ ] No hay errores en consola y la interfaz funciona en una pantalla estrecha.
 
 El agente verificó la sintaxis JavaScript y probó 1.000 aciertos, el límite exacto de tiempo, clics tardíos, un intervalo retrasado, final con cero puntos, diez reinicios consecutivos, nueva partida y un único temporizador. Estas pruebas utilizan un DOM y un reloj simulados; no equivalen a una verificación visual o de teclado en un navegador real.
+
+Comprobaciones adicionales del agente para la fase 4: nueve puntuaciones (0, 36, 37, 47, 48, 53, 54, 60 y 61), todos los empates, alias vacío y de más de 20 caracteres, limpieza de espacios, HTML como texto, envío repetido, cinco filas, focos y nueva partida sin datos anteriores. DOM y reloj simulados; revisión visual pendiente.
 
 ## Uso de IA
 
@@ -70,13 +92,15 @@ Para esta primera misión he empleado la IA generativa de ChatGPT, a través de 
 
 A continuación, el agente de IA irá actualizando este README al preparar cada commit, recogiendo las preguntas, indicaciones, decisiones y comprobaciones de esta misión. Yo revisaré ese registro para que refleje lo que realmente hemos trabajado.
 
+**Trabajo propio y asistido:** he aportado la idea, las decisiones, anotaciones manuales en el HTML, el título gráfico, esta reflexión y la gestión de Git y GitHub. Codex ha generado la implementación del juego, el formulario y la clasificación, además de ayudar con estilos, comentarios y documentación. He revisado los cambios y planteado las preguntas recogidas abajo. Las comprobaciones del agente y las pruebas manuales pendientes están detalladas en [Comprobaciones de esta fase](#comprobaciones-de-esta-fase).
+
 ### Metodología y seguimiento
 
 El trabajo se divide en fases pequeñas. Antes de avanzar, reviso el resultado, pregunto por los elementos que no entiendo y pido explicaciones de las decisiones técnicas. Los commits deben representar avances reales; he pedido al agente que me avise al cerrar cada fase y me proponga un mensaje, mientras yo ejecuto los comandos de Git.
 
 Para conservar el contexto, hemos preparado una guía base de las misiones y una nota de seguimiento de M1 en Markdown. La guía reúne las reglas comunes del curso, la declaración de IA, la Autopsia y mi forma de trabajar. La nota de M1 recoge el estado del proyecto, las decisiones, las pruebas y el siguiente paso. Estos documentos sirven como base para Obsidian y para retomar el trabajo con otro agente; complementan el README de la entrega.
 
-### Preguntas y decisiones trabajadas hasta la fase 3
+### Preguntas y decisiones trabajadas hasta la fase 4
 
 - **Elección y alcance de la idea:** propuse un aim trainer y un Snake musical. Pedí comparar su dificultad y su encaje con la rúbrica, y elegí el aim trainer. Acordamos empezar con 16 casillas, cuatro objetivos y puntuación; el temporizador, los fallos y otras mejoras se incorporan por fases.
 - **Estructura y HTML:** pedí revisar los nombres de los archivos y explicar los elementos del `head`: codificación UTF-8, viewport, enlace al CSS y carga de JavaScript con `defer`. También pregunté por `DOCTYPE`, `lang="es"`, cómo escribir comentarios y cómo distinguir las secciones del `body`.
@@ -90,31 +114,12 @@ Para conservar el contexto, hemos preparado una guía base de las misiones y una
 - **Pantalla de inicio:** comparé tres opciones para delimitar el tablero y elegí un borde exterior con el botón centrado. Antes de implementarlo, pregunté por la dificultad del código para poder defenderlo. Revisamos `position: relative`, `position: absolute`, `inset`, Flexbox y `hidden`. Acordamos posponer el ajuste del tablero a la altura de la ventana.
 - **Temporizador y clasificación:** propuse el mensaje final, un formulario de nombre y cuatro rivales ficticios, además de un reinicio durante la partida. Acordamos separar el ciclo de partida (fase 3) del formulario y la clasificación (fase 4). El agente propuso calcular el tiempo desde una hora límite en vez de restar uno en cada intervalo. La revisión del código de esta fase sigue pendiente.
 - **Título propio y favicon:** creé personalmente el título gráfico y proporcioné un segundo PNG para el favicon. Pedí sustituir el título anterior y retirar su decoración CSS. El agente integró ambos archivos, conservó el `h1` con texto alternativo y limitó con CSS el espacio transparente del título sin modificar la imagen original.
+- **Clasificación local:** pedí continuar con el formulario y los rivales acordados. El agente implementó validación del alias, creación de filas con `textContent`, ordenación por puntos, desempate y reinicio sin conservar el resultado previo. La revisión de estas funciones por mi parte queda pendiente.
 - **Documentación del aprendizaje:** pedí corregir esta sección porque los prompts de autorización por sí solos no reflejaban mis preguntas sobre funciones, parámetros, propiedades y operaciones del DOM. La reflexión inicial de esta sección la he escrito yo; el agente ha corregido su ortografía y organizado el seguimiento a partir de la conversación.
 
-### Avance por fases
-
-La fase 2 quedó aceptada y guardada por el alumno en `da6dc15`. La fase 3 implementa el temporizador, el final y el reinicio; se revisará antes de preparar su commit.
-
-Para la fase 4 acordamos pedir un alias al terminar (obligatorio, hasta 20 caracteres y sin aceptar solo espacios). El botón «Ver clasificación» mostrará cuatro participantes ficticios más el resultado del usuario: Enrique Pastor (60), Mario Vaquerizo (53), Peereira7 (47) y Peterbot (36). Se ordenará por puntos de mayor a menor, colocando al usuario después de los rivales con los que empate y destacando su fila. Después habrá un botón «Volver a jugar».
-
-La clasificación se etiquetará como demostración con rivales ficticios. La primera versión solo mantendrá el resultado de esa partida en memoria, sin `localStorage`. Reiniciar una partida en curso descarta su resultado. El formulario y la clasificación todavía no están implementados.
-
-### Dos prompts reales de revisión y aprendizaje
-
-Se conservan tal como se escribieron, incluidas sus erratas:
-
-> tambien en el css me gustaria que explicases cada atributo de estilo si se llama asi por ejemplo el width: min(100% - 32px, 640px); dle .entrenador {, saber que se esta tocando en cada campo del with como que min y esos tres parametros, que se eplique como funcionan esos elementos complejos
+### Ejemplo real de revisión
 
 > vale me gusta, dime ahora que partes del html, ccs y js has añadido/modificado
-
-### Reparto del trabajo y verificación
-
-**Mi aportación:** propuse las ideas, elegí el alcance, creé la carpeta y los cinco archivos vacíos, añadí anotaciones al HTML y personalicé el título. He revisado el código mediante las preguntas anteriores, ejecutado los comandos del primer commit y publicado el repositorio. También he redactado la reflexión inicial sobre el uso de IA y definido cómo quiero documentar y reutilizar el proceso de aprendizaje.
-
-**Aportación de Codex:** ayudó a analizar la rúbrica y comparar las ideas; generó el código inicial y la implementación de objetivos, eventos y puntuación de la fase 2. Añadió comentarios explicativos, respondió a mis preguntas, preparó documentación y realizó comprobaciones técnicas. También implementó el temporizador, el final y el reinicio de la fase 3. Las funciones del juego de estas fases fueron generadas con IA; mi revisión y mis anotaciones no se presentan como implementación manual de esas funciones.
-
-**Verificación realizada:** el agente comprobó la sintaxis JavaScript y ejecutó una prueba con un DOM simulado de 1.000 aciertos, comprobando la reposición de objetivos, las posiciones únicas, los clics vacíos, un segundo inicio y el traslado del foco. Estas comprobaciones no equivalen a una prueba visual ni de teclado en un navegador real. He aceptado el resultado general de la fase 2. Las pruebas manuales específicas que no he confirmado individualmente permanecen sin marcar para su seguimiento antes de la entrega. Haber preguntado por un concepto tampoco sustituye poder explicarlo: seguiré revisando los puntos que necesite antes de la defensa.
 
 ## Autopsia
 

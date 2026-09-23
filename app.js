@@ -6,6 +6,18 @@ const botonReiniciar = document.querySelector("#reiniciar");
 const marcadorTiempo = document.querySelector("#tiempo");
 const marcadorAciertos = document.querySelector("#aciertos");
 const mensajeEstado = document.querySelector("#estado");
+const formularioAlias = document.querySelector("#formulario-alias");
+const campoAlias = document.querySelector("#alias");
+const errorAlias = document.querySelector("#error-alias");
+const clasificacion = document.querySelector("#clasificacion");
+const tituloClasificacion = document.querySelector("#titulo-clasificacion");
+const cuerpoClasificacion = document.querySelector("#filas-clasificacion");
+const rivales = [
+  { nombre: "Enrique Pastor", puntos: 60, esUsuario: false },
+  { nombre: "Mario Vaquerizo", puntos: 53, esUsuario: false },
+  { nombre: "Peereira7", puntos: 47, esUsuario: false },
+  { nombre: "Peterbot", puntos: 36, esUsuario: false },
+];
 const numeroDeCasillas = 16;
 const numeroDeObjetivos = 4;
 const duracionPartida = 60;
@@ -15,6 +27,7 @@ let aciertos = 0;
 let entrenamientoActivo = false;
 let finDePartida = 0;
 let intervalo = null; // Identificador del temporizador, para poder cancelarlo.
+let resultadoPendiente = false; // Solo permite enviar el alias una vez y después de terminar.
 
 function crearTablero() {
   for (let indice = 0; indice < numeroDeCasillas; indice++) {
@@ -70,11 +83,15 @@ function finalizarPartida() {
   textoPantalla.textContent = `Fin · ${aciertos} puntos`;
   botonIniciar.textContent = "Volver a jugar";
   botonIniciar.disabled = false;
+  botonIniciar.hidden = true;
   pantallaInicio.hidden = false;
+  pantallaInicio.classList.add("resultado");
+  formularioAlias.hidden = false;
+  resultadoPendiente = true;
   botonReiniciar.hidden = true;
   mensajeEstado.textContent = `Partida terminada. Has conseguido ${aciertos} puntos.`;
 
-  if (focoEnJuego) botonIniciar.focus({ preventScroll: true });
+  if (focoEnJuego) campoAlias.focus({ preventScroll: true });
 }
 
 function actualizarTiempo() {
@@ -90,6 +107,15 @@ function iniciarEntrenamiento() {
 
   clearInterval(intervalo); // Garantiza que solo haya un temporizador activo.
   limpiarObjetivos();
+  resultadoPendiente = false;
+  formularioAlias.reset();
+  errorAlias.textContent = "";
+  campoAlias.removeAttribute("aria-invalid");
+  formularioAlias.hidden = true;
+  clasificacion.hidden = true;
+  cuerpoClasificacion.replaceChildren();
+  botonIniciar.hidden = false;
+  pantallaInicio.classList.remove("resultado");
   entrenamientoActivo = true;
   aciertos = 0;
   marcadorAciertos.textContent = aciertos;
@@ -117,6 +143,55 @@ function reiniciarPartida() {
   if (!entrenamientoActivo) return;
   entrenamientoActivo = false;
   iniciarEntrenamiento();
+}
+
+function mostrarClasificacion(evento) {
+  evento.preventDefault(); // Evita que enviar el formulario recargue la página.
+  if (!resultadoPendiente || entrenamientoActivo) return;
+
+  const nombre = campoAlias.value.trim(); // Quita espacios al principio y al final.
+  if (nombre.length === 0 || nombre.length > 20) {
+    errorAlias.textContent = "Escribe un alias de entre 1 y 20 caracteres; no puede contener solo espacios.";
+    campoAlias.setAttribute("aria-invalid", "true");
+    campoAlias.focus();
+    return;
+  }
+
+  errorAlias.textContent = "";
+  campoAlias.removeAttribute("aria-invalid");
+  const participantes = [...rivales, { nombre, puntos: aciertos, esUsuario: true }]; // Copia la lista sin modificar los rivales.
+  participantes.sort((a, b) => {
+    if (a.puntos !== b.puntos) return b.puntos - a.puntos; // De mayor a menor puntuación.
+    return Number(a.esUsuario) - Number(b.esUsuario); // En empate, el usuario va después del rival.
+  });
+
+  cuerpoClasificacion.replaceChildren();
+  for (let indice = 0; indice < participantes.length; indice++) {
+    const participante = participantes[indice];
+    const fila = document.createElement("tr");
+    const puesto = document.createElement("td");
+    const alias = document.createElement("th");
+    const puntos = document.createElement("td");
+    alias.setAttribute("scope", "row");
+
+    puesto.textContent = indice + 1;
+    alias.textContent = participante.esUsuario ? `${participante.nombre} (tú)` : participante.nombre; // Texto seguro, incluso si el alias contiene etiquetas HTML.
+    puntos.textContent = participante.puntos;
+    if (participante.esUsuario) fila.classList.add("fila-usuario");
+
+    fila.appendChild(puesto);
+    fila.appendChild(alias);
+    fila.appendChild(puntos);
+    cuerpoClasificacion.appendChild(fila);
+  }
+
+  resultadoPendiente = false;
+  formularioAlias.hidden = true;
+  clasificacion.hidden = false;
+  botonIniciar.hidden = false;
+  tituloClasificacion.focus({ preventScroll: true });
+  pantallaInicio.scrollTop = 0;
+  mensajeEstado.textContent = "Clasificación de demostración: cuatro rivales ficticios y tu última partida. No se guarda al recargar.";
 }
 
 function manejarClicTablero(evento) {
@@ -149,4 +224,5 @@ crearTablero();
 botonIniciar.disabled = false;
 botonIniciar.addEventListener("click", iniciarEntrenamiento);
 botonReiniciar.addEventListener("click", reiniciarPartida);
+formularioAlias.addEventListener("submit", mostrarClasificacion);
 tablero.addEventListener("click", manejarClicTablero); // Un listener atiende todas las bolitas, incluidas las nuevas.

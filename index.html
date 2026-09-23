@@ -50,6 +50,28 @@
           <!-- Esta capa se oculta al iniciar; el tablero permanece visible -->
           <div id="pantalla-inicio" class="pantalla-inicio">
             <p id="texto-pantalla">Cuatro objetivos. Afina tu puntería.</p>
+            <!-- Formulario visible al terminar; se valida desde JavaScript -->
+            <form id="formulario-alias" class="formulario-alias" hidden novalidate>
+              <label for="alias">Tu nombre o alias</label>
+              <input id="alias" name="alias" type="text" required maxlength="20" autocomplete="nickname" aria-describedby="ayuda-alias error-alias">
+              <p id="ayuda-alias">De 1 a 20 caracteres. Solo se usa en esta partida.</p>
+              <p id="error-alias" role="alert"></p>
+              <button id="ver-clasificacion" type="submit">Ver clasificación</button>
+            </form>
+
+            <!-- Cinco filas creadas con JavaScript al enviar un alias válido -->
+            <section id="clasificacion" class="clasificacion" hidden aria-labelledby="titulo-clasificacion">
+              <h3 id="titulo-clasificacion" tabindex="-1">Clasificación</h3>
+              <p>Demostración: cuatro rivales ficticios y tu resultado. No se guarda al recargar.</p>
+              <table>
+                <caption>Partidas de 60 segundos</caption>
+                <thead>
+                  <tr><th scope="col">Puesto</th><th scope="col">Alias</th><th scope="col">Puntos</th></tr>
+                </thead>
+                <tbody id="filas-clasificacion"></tbody>
+              </table>
+              <p>En empate, tu resultado aparece después del rival con los mismos puntos.</p>
+            </section>
             <button id="iniciar" type="button" disabled>Iniciar entrenamiento</button>
           </div>
         </div>
@@ -65,13 +87,13 @@
       <section class="instrucciones" aria-labelledby="titulo-instrucciones">
         <h2 id="titulo-instrucciones">Cómo jugar</h2>
         <p>Pulsa las bolitas para sumar puntos. Hay cuatro a la vez y cada acierto crea otra en una casilla libre diferente. Pulsar una zona vacía no suma ni penaliza. También puedes seleccionar los objetivos con Tab y activarlos con Intro o Espacio.</p>
-        <p>La partida dura 60 segundos. Al terminar verás tus puntos y podrás volver a jugar. Reiniciar durante la partida descarta tus puntos y empieza otros 60 segundos.</p>
+        <p>La partida dura 60 segundos. Al terminar verás tus puntos. Escribe tu alias para ver la clasificación de demostración y volver a jugar. Reiniciar durante la partida descarta tus puntos y empieza otros 60 segundos.</p>
       </section>
 
       <!-- Aviso cuando JavaScript está desactivado -->
       <noscript>Activa JavaScript para que se genere el tablero.</noscript>
       <!-- Pie de página -->
-      <footer>Prototipo · Partidas de 60 segundos · HTML, CSS y JavaScript puro</footer>
+      <footer>Prototipo · Clasificación de demostración · HTML, CSS y JavaScript puro</footer>
     </main>
   </body>
 </html>
