@@ -5,6 +5,8 @@
     <meta charset="UTF-8">      <!-- Codificación del texto, interprestación del navegador | UTF-8 permite representar tildes, la ñ, símbolos y muchos otros -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- name="viewport": indica que estamos configurando el área donde el navegador muestra la página | width=device-width: hace que su anchura corresponda al ancho del dispositivo, medido en píxeles CSS | initial-scale=1.0: establece la escala inicial al 100 % -->
     <title>Aim Trainer - chiissuu</title>
+    <!-- Icono de la pestaña del navegador -->
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon.png">
     <link rel="stylesheet" href="styles.css">     <!-- rel="stylesheet": indica que el archivo enlazado es una hoja de estilos | href="styles.css": indica nuestro archivo css -->
     <script src="app.js" defer></script>    <!-- Enlazar nuestro codigo JS | defer: permite descargarlo mientras el navegador procesa el HTML -->
   </head>
@@ -15,7 +17,9 @@
     <main class="entrenador">
       <header class="cabecera">
         <p class="etiqueta">M1 · El Despertar del DOM</p>
-        <h1>Aim Trainer<span>.</span></h1>
+        <h1 class="titulo-juego">
+          <img src="assets/img/titulo-aim-trainer.png" alt="Aim Trainer" width="1600" height="1200">
+        </h1>
         <p class="descripcion">Entrena tu puntería, un objetivo a la vez.</p>
       </header>
 
@@ -33,7 +37,7 @@
             <dd id="aciertos">0</dd>
           </div>
           <div>
-            <dt>Tiempo (próxima fase)</dt>
+            <dt>Tiempo restante</dt>
             <dd><span id="tiempo">60</span> <span class="unidad">s</span></dd>
           </div>
         </dl>
@@ -45,14 +49,15 @@
 
           <!-- Esta capa se oculta al iniciar; el tablero permanece visible -->
           <div id="pantalla-inicio" class="pantalla-inicio">
-            <p>Cuatro objetivos. Afina tu puntería.</p>
+            <p id="texto-pantalla">Cuatro objetivos. Afina tu puntería.</p>
             <button id="iniciar" type="button" disabled>Iniciar entrenamiento</button>
           </div>
         </div>
 
         <!-- Mensaje de estado, visible también durante el entrenamiento -->
         <div class="controles">
-          <p id="estado" role="status">Pulsa Iniciar entrenamiento. Esta versión permite entrenar sin temporizador.</p>
+          <button id="reiniciar" type="button" hidden>Reiniciar partida</button>
+          <p id="estado" role="status">Pulsa Iniciar entrenamiento. Tienes 60 segundos para sumar puntos.</p>
         </div>
       </section>
 
@@ -60,13 +65,13 @@
       <section class="instrucciones" aria-labelledby="titulo-instrucciones">
         <h2 id="titulo-instrucciones">Cómo jugar</h2>
         <p>Pulsa las bolitas para sumar puntos. Hay cuatro a la vez y cada acierto crea otra en una casilla libre diferente. Pulsar una zona vacía no suma ni penaliza. También puedes seleccionar los objetivos con Tab y activarlos con Intro o Espacio.</p>
-        <p>El límite de 60 segundos y el reinicio llegarán en la siguiente fase. Por ahora, recarga la página para volver a empezar.</p>
+        <p>La partida dura 60 segundos. Al terminar verás tus puntos y podrás volver a jugar. Reiniciar durante la partida descarta tus puntos y empieza otros 60 segundos.</p>
       </section>
 
       <!-- Aviso cuando JavaScript está desactivado -->
       <noscript>Activa JavaScript para que se genere el tablero.</noscript>
       <!-- Pie de página -->
-      <footer>Prototipo · Objetivos y aciertos · HTML, CSS y JavaScript puro</footer>
+      <footer>Prototipo · Partidas de 60 segundos · HTML, CSS y JavaScript puro</footer>
     </main>
   </body>
 </html>

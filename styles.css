@@ -134,26 +134,25 @@ body {
   text-transform: uppercase;
 }
 
-/* Todos los <h1>; aquí, el título principal «Aim Trainer». */
-h1 {
-  /* Espacio EXTERIOR: 8px arriba y abajo; 0 a izquierda y derecha. */
-  margin: 8px 0;
-  /* clamp(mínimo, preferido, máximo) recibe TRES valores:
-     2.5rem: mínimo, 2.5 veces el tamaño de fuente del elemento raíz.
-     8vw: tamaño preferido, el 8% del ancho de la ventana.
-     4rem: máximo, 4 veces el tamaño de fuente del elemento raíz.
-     El título crece con la ventana sin salir de esos límites.
-     Si la fuente raíz es 16px, los límites son 40px y 64px.
-  */
-  font-size: clamp(2.5rem, 8vw, 4rem);
-  /* Espacio adicional entre caracteres, relativo al tamaño de letra de este elemento (em). El valor negativo los acerca. */
-  letter-spacing: -0.06em;
+/* El <h1> conserva el significado de título; su contenido es la imagen del alumno. */
+.titulo-juego {
+  /* Elimina el margen predeterminado del encabezado; separa la descripción inferior. */
+  margin: 0 0 16px;
 }
 
-/* <span> dentro del <h1>: colorea el punto situado al final del título. */
-h1 span {
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #b64c2e;
+.titulo-juego img {
+  /* Evita el espacio de línea que deja una imagen inline. */
+  display: block;
+  /* Se adapta al ancho disponible sin superar el contenedor. */
+  width: 100%;
+  height: auto;
+  /* Franja de cuatro unidades de ancho por una de alto. El PNG original
+     es 1600 × 1200, pero el dibujo ocupa la zona central (y=444 a 766). */
+  aspect-ratio: 4 / 1;
+  /* Llena la franja sin deformar: recorta visualmente solo los márgenes
+     transparentes superiores e inferiores; el archivo permanece intacto. */
+  object-fit: cover;
+  object-position: center;
 }
 
 /* <p class="descripcion">: frase situada debajo del título principal. */
@@ -365,7 +364,8 @@ dd {
 
 /* Contorno visible al navegar con teclado; no cambia el tamaño del elemento. */
 .objetivo:focus-visible,
-#iniciar:focus-visible {
+#iniciar:focus-visible,
+#reiniciar:focus-visible {
   outline: 3px solid #183a33;
   outline-offset: 4px;
 }
@@ -424,6 +424,23 @@ button {
   background-color: #e3e8e0;
   /* not-allowed muestra un cursor de acción no permitida. El bloqueo real lo hace disabled en HTML o JavaScript. */
   cursor: not-allowed;
+}
+
+/* Botón secundario debajo del tablero: reinicia una partida en curso. */
+#reiniciar {
+  /* Relleno vertical y horizontal, borde fino y esquinas redondeadas. */
+  padding: 10px 16px;
+  border: 1px solid #ced9ce;
+  border-radius: 10px;
+  /* Apariencia secundaria para diferenciarlo del inicio central. */
+  color: #183a33;
+  background-color: #f3f5ef;
+  cursor: pointer;
+}
+
+/* Solo se muestra durante una partida activa. */
+#reiniciar[hidden] {
+  display: none;
 }
 
 /* ==================================================

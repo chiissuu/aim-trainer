@@ -1,14 +1,20 @@
 const tablero = document.querySelector("#tablero"); // Busca el primer elemento con id="tablero" y guarda su referencia.
 const botonIniciar = document.querySelector("#iniciar");
 const pantallaInicio = document.querySelector("#pantalla-inicio");
+const textoPantalla = document.querySelector("#texto-pantalla");
+const botonReiniciar = document.querySelector("#reiniciar");
+const marcadorTiempo = document.querySelector("#tiempo");
 const marcadorAciertos = document.querySelector("#aciertos");
 const mensajeEstado = document.querySelector("#estado");
 const numeroDeCasillas = 16;
 const numeroDeObjetivos = 4;
+const duracionPartida = 60;
 const casillas = [];
 const objetivosActivos = []; // Guarda los índices de las casillas que tienen una bolita.
 let aciertos = 0;
 let entrenamientoActivo = false;
+let finDePartida = 0;
+let intervalo = null; // Identificador del temporizador, para poder cancelarlo.
 
 function crearTablero() {
   for (let indice = 0; indice < numeroDeCasillas; indice++) {
@@ -43,29 +49,82 @@ function colocarObjetivo(indice) {
   return objetivo;
 }
 
+function limpiarObjetivos() {
+  for (const casilla of casillas) {
+    casilla.replaceChildren(); // Vacía su contenido sin borrar la casilla del tablero.
+  }
+  objetivosActivos.length = 0; // Vacía el array conservando su referencia const.
+}
+
+function finalizarPartida() {
+  if (!entrenamientoActivo) return;
+
+  entrenamientoActivo = false;
+  clearInterval(intervalo);
+  intervalo = null;
+  marcadorTiempo.textContent = 0;
+  const focoEnJuego = tablero.contains(document.activeElement)
+    || document.activeElement === botonReiniciar;
+  limpiarObjetivos();
+
+  textoPantalla.textContent = `Fin · ${aciertos} puntos`;
+  botonIniciar.textContent = "Volver a jugar";
+  botonIniciar.disabled = false;
+  pantallaInicio.hidden = false;
+  botonReiniciar.hidden = true;
+  mensajeEstado.textContent = `Partida terminada. Has conseguido ${aciertos} puntos.`;
+
+  if (focoEnJuego) botonIniciar.focus({ preventScroll: true });
+}
+
+function actualizarTiempo() {
+  const milisegundosRestantes = finDePartida - Date.now();
+  const segundosRestantes = Math.max(0, Math.ceil(milisegundosRestantes / 1000)); // Redondea hacia arriba y evita negativos.
+  marcadorTiempo.textContent = segundosRestantes;
+
+  if (milisegundosRestantes <= 0) finalizarPartida();
+}
+
 function iniciarEntrenamiento() {
   if (entrenamientoActivo) return;
 
+  clearInterval(intervalo); // Garantiza que solo haya un temporizador activo.
+  limpiarObjetivos();
   entrenamientoActivo = true;
   aciertos = 0;
   marcadorAciertos.textContent = aciertos;
+  marcadorTiempo.textContent = duracionPartida;
 
   for (let cantidad = 0; cantidad < numeroDeObjetivos; cantidad++) {
     colocarObjetivo(elegirCasillaLibre());
   }
 
-  const inicioTeniaFoco = document.activeElement === botonIniciar;
+  const inicioTeniaFoco = document.activeElement === botonIniciar
+    || document.activeElement === botonReiniciar;
   botonIniciar.disabled = true;
   pantallaInicio.hidden = true; // Oculta solo el mensaje y el botón superpuestos, no el tablero.
+  botonReiniciar.hidden = false;
+  finDePartida = Date.now() + duracionPartida * 1000; // Fecha límite en milisegundos; no restamos segundos a mano.
+  intervalo = setInterval(actualizarTiempo, 100); // Refresca el marcador; Date.now determina el tiempo real transcurrido.
 
   if (inicioTeniaFoco) {
     tablero.querySelector(".objetivo").focus({ preventScroll: true }); // Traslada el foco al juego antes de continuar con el teclado.
   }
-  mensajeEstado.textContent = "Entrenamiento activo sin límite de tiempo. Pulsa las bolitas; recarga la página para empezar de nuevo.";
+  mensajeEstado.textContent = "Tienes 60 segundos. Reiniciar descarta los puntos de esta partida.";
+}
+
+function reiniciarPartida() {
+  if (!entrenamientoActivo) return;
+  entrenamientoActivo = false;
+  iniciarEntrenamiento();
 }
 
 function manejarClicTablero(evento) {
   if (!entrenamientoActivo) return;
+  if (Date.now() >= finDePartida) { // Impide puntuar fuera de plazo aunque el intervalo se haya retrasado.
+    finalizarPartida();
+    return;
+  }
 
   const objetivo = evento.target.closest(".objetivo"); // Encuentra la bolita pulsada; devuelve null en una zona vacía.
   if (!objetivo || !tablero.contains(objetivo)) return;
@@ -89,4 +148,5 @@ function manejarClicTablero(evento) {
 crearTablero();
 botonIniciar.disabled = false;
 botonIniciar.addEventListener("click", iniciarEntrenamiento);
+botonReiniciar.addEventListener("click", reiniciarPartida);
 tablero.addEventListener("click", manejarClicTablero); // Un listener atiende todas las bolitas, incluidas las nuevas.
