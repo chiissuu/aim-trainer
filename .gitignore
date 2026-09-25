@@ -9,3 +9,6 @@ Desktop.ini
 .env
 .env.*
 !.env.example
+
+# Configuración personal de la bóveda de Obsidian.
+docs/.obsidian/

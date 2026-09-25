@@ -52,6 +52,8 @@
 
             <!-- Esta capa se oculta al iniciar; el tablero permanece visible -->
             <div id="pantalla-inicio" class="pantalla-inicio">
+              <!-- JavaScript escribe aquí la puntuación cuando termina la partida -->
+              <p id="texto-pantalla"></p>
 
               <!-- Formulario visible al terminar; se valida desde JavaScript -->
               <form id="formulario-alias" class="formulario-alias" hidden novalidate>
@@ -72,12 +74,12 @@
                 <h3 id="titulo-clasificacion" tabindex="-1">Clasificación</h3>
                 <table>
                   <thead>
-                    <tr><th scope="col">Puesto</th><th scope="col">Alias</th><th scope="col">Puntos</th></tr>
+                    <tr><th scope="col">Puesto</th><th scope="col">Alias</th><th scope="col">Puntos</th><th scope="col">Precisión</th></tr>
                   </thead>
                   <tbody id="filas-clasificacion"></tbody>
                 </table>
-                <p>En el caso de empate, se queda en mejor posición el que lo hizo primero.</p>
-                <p>Solo se queda tu mejor puntuación</p>
+                <p>Si hay empate a puntos, gana la mayor precisión. Si también coincide, queda delante quien consiguió antes la marca.</p>
+                <p>Solo se conserva tu mejor resultado.</p>
               </section>
 
               <button id="iniciar" type="button" disabled>Iniciar<br>Entrenamiento</button>

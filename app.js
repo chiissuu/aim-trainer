@@ -23,10 +23,10 @@ const imagenTitulo = document.querySelector("#imagen-titulo");
 
 // 1.2. Configuración del juego
 const rivales = [
-  { nombre: "Enrique Pastor", puntos: 60, esUsuario: false },
-  { nombre: "Mario Vaquerizo", puntos: 53, esUsuario: false },
-  { nombre: "Peereira7", puntos: 47, esUsuario: false },
-  { nombre: "Peterbot", puntos: 36, esUsuario: false },
+  { nombre: "Enrique Pastor", puntos: 35, fallos: 5, esUsuario: false },
+  { nombre: "Mario Vaquerizo", puntos: 29, fallos: 3, esUsuario: false },
+  { nombre: "Peereira7", puntos: 23, fallos: 2, esUsuario: false },
+  { nombre: "Peterbot", puntos: 15, fallos: 5, esUsuario: false },
 ];
 
 const numeroDeFilas = 4;
@@ -51,6 +51,7 @@ let finDePartida = 0;
 let intervalo = null; // Identificador del temporizador, para poder cancelarlo.
 let resultadoPendiente = false; // Solo permite enviar el alias una vez y después de terminar.
 let mejorPuntuacion = null; // Se conserva mientras la página siga abierta.
+let mejorPrecision = null;
 let aliasMejorPuntuacion = "";
 
 // ==================================================
@@ -167,15 +168,18 @@ function reiniciarPartida() {
 }
 
 // 2.3. Interacción: aciertos, fallos y estadísticas
-function actualizarEstadisticas() {
-  const intentos = aciertos + fallos;
-  let precision;
+function calcularPrecision(cantidadAciertos, cantidadFallos) {
+  const intentos = cantidadAciertos + cantidadFallos;
 
   if (intentos === 0) {
-    precision = 0; // Antes del primer intento mostramos 0% y evitamos dividir entre cero.
+    return 0; // Antes del primer intento mostramos 0% y evitamos dividir entre cero.
   } else {
-    precision = Math.round((aciertos / intentos) * 100); // Convierte la proporción en porcentaje entero.
+    return Math.round((cantidadAciertos / intentos) * 100); // Convierte la proporción en porcentaje entero.
   }
+}
+
+function actualizarEstadisticas() {
+  const precision = calcularPrecision(aciertos, fallos);
 
   marcadorAciertos.textContent = aciertos;
   marcadorFallos.textContent = fallos;
@@ -223,6 +227,14 @@ function manejarClicTablero(evento) {
   registrarAcierto(objetivo);
 }
 
+function evitarActivacionMantenida(evento) {
+  if (!evento.repeat) return;
+  if (evento.key !== "Enter" && evento.key !== " ") return;
+  if (!evento.target.classList.contains("objetivo")) return;
+
+  evento.preventDefault(); // Evita sumar muchos aciertos manteniendo una tecla pulsada.
+}
+
 // 2.4. Final de partida
 function finalizarPartida() {
   if (!entrenamientoActivo) return;
@@ -266,32 +278,53 @@ function validarAlias() {
 }
 
 function actualizarMejorPuntuacion(nombre) {
+  const precisionActual = calcularPrecision(aciertos, fallos);
+  let mejoraLaMarca = false;
+
   if (mejorPuntuacion === null || aciertos > mejorPuntuacion) {
-    mejorPuntuacion = aciertos;
-    aliasMejorPuntuacion = nombre;
+    mejoraLaMarca = true;
+  } else if (aciertos === mejorPuntuacion && precisionActual > mejorPrecision) {
+    mejoraLaMarca = true;
   }
+
+  if (!mejoraLaMarca) return;
+
+  mejorPuntuacion = aciertos;
+  mejorPrecision = precisionActual;
+  aliasMejorPuntuacion = nombre;
 }
 
 function crearParticipantesOrdenados() {
   const mejorResultado = {
     nombre: aliasMejorPuntuacion,
     puntos: mejorPuntuacion,
+    precision: mejorPrecision,
+    ordenRegistro: rivales.length,
     esUsuario: true,
   };
-  const participantes = [...rivales, mejorResultado]; // Copia la lista sin modificar los rivales.
+  const participantes = [];
+
+  for (let indice = 0; indice < rivales.length; indice++) {
+    const rival = rivales[indice];
+    participantes.push({
+      ...rival,
+      precision: calcularPrecision(rival.puntos, rival.fallos),
+      ordenRegistro: indice,
+    });
+  }
+
+  participantes.push(mejorResultado);
 
   participantes.sort(function (participanteA, participanteB) {
     if (participanteA.puntos !== participanteB.puntos) {
       return participanteB.puntos - participanteA.puntos; // De mayor a menor puntuación.
     }
 
-    if (participanteA.esUsuario) {
-      return 1;
-    } else if (participanteB.esUsuario) {
-      return -1;
-    } else {
-      return 0;
+    if (participanteA.precision !== participanteB.precision) {
+      return participanteB.precision - participanteA.precision; // En empate a puntos, gana la precisión.
     }
+
+    return participanteA.ordenRegistro - participanteB.ordenRegistro; // Si todo coincide, gana la marca anterior.
   });
 
   return participantes;
@@ -302,6 +335,7 @@ function crearFilaClasificacion(participante, indice) {
   const puesto = document.createElement("td");
   const alias = document.createElement("th");
   const puntos = document.createElement("td");
+  const precision = document.createElement("td");
   alias.setAttribute("scope", "row");
 
   puesto.textContent = indice + 1;
@@ -314,9 +348,11 @@ function crearFilaClasificacion(participante, indice) {
   }
 
   puntos.textContent = participante.puntos;
+  precision.textContent = `${participante.precision}%`;
   fila.appendChild(puesto);
   fila.appendChild(alias);
   fila.appendChild(puntos);
+  fila.appendChild(precision);
   return fila;
 }
 
@@ -380,4 +416,5 @@ botonIniciar.addEventListener("click", iniciarEntrenamiento);
 botonReiniciar.addEventListener("click", reiniciarPartida);
 formularioAlias.addEventListener("submit", mostrarClasificacion);
 tablero.addEventListener("click", manejarClicTablero); // Un listener atiende todas las bolitas, incluidas las nuevas.
+tablero.addEventListener("keydown", evitarActivacionMantenida);
 document.addEventListener("keydown", alternarModoOscuro);
