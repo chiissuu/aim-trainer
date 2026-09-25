@@ -2,98 +2,115 @@
 <html lang="es">        <!-- Atributo lang="es" indica que el idioma principal del contenido es español -->
 
   <head>
-    <meta charset="UTF-8">      <!-- Codificación del texto, interprestación del navegador | UTF-8 permite representar tildes, la ñ, símbolos y muchos otros -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- name="viewport": indica que estamos configurando el área donde el navegador muestra la página | width=device-width: hace que su anchura corresponda al ancho del dispositivo, medido en píxeles CSS | initial-scale=1.0: establece la escala inicial al 100 % -->
+    <meta charset="UTF-8">      <!-- Codificación del texto | UTF-8 permite representar tildes, la ñ, símbolos y muchos otros caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- Adapta el ancho de la página al dispositivo y establece la escala inicial al 100 % -->
     <title>Aim Trainer - chiissuu</title>
     <!-- Icono de la pestaña del navegador -->
     <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="styles.css">     <!-- rel="stylesheet": indica que el archivo enlazado es una hoja de estilos | href="styles.css": indica nuestro archivo css -->
-    <script src="app.js" defer></script>    <!-- Enlazar nuestro codigo JS | defer: permite descargarlo mientras el navegador procesa el HTML -->
+    <link rel="stylesheet" href="styles.css">     <!-- Enlaza la hoja de estilos -->
+    <script src="app.js" defer></script>    <!-- Enlaza JavaScript; defer espera a que el HTML esté preparado -->
   </head>
 
-
   <body>
-
     <main class="entrenador">
       <header class="cabecera">
-        <p class="etiqueta">M1 · El Despertar del DOM</p>
-        <h1 class="titulo-juego">
-          <img src="assets/img/titulo-aim-trainer.png" alt="Aim Trainer" width="1600" height="1200">
-        </h1>
-        <p class="descripcion">Entrena tu puntería, un objetivo a la vez.</p>
+        <!-- Composición decorativa: diana, título y diana -->
+        <div class="titulo-con-dianas">
+          <span class="diana-decorativa" aria-hidden="true"></span>
+          <h1 class="titulo-juego">
+            <img id="imagen-titulo" src="assets/img/titulo-aim-trainer.png" alt="Aim Trainer" width="1600" height="1200">
+          </h1>
+          <span class="diana-decorativa" aria-hidden="true"></span>
+        </div>
+        <p class="descripcion">El mejor simulador web de práctica de puntería para Esports.</p>
       </header>
 
       <!-- Panel de entrenamiento -->
       <section class="panel" aria-labelledby="titulo-sesion">
         <div class="encabezado-sesion">
           <h2 id="titulo-sesion">Zona de entrenamiento</h2>
-          <span class="formato">4 × 4</span>
         </div>
 
-        <!-- Marcador de aciertos y tiempo restante -->
-        <dl class="marcador">
-          <div>
-            <dt>Aciertos</dt>
-            <dd id="aciertos">0</dd>
-          </div>
-          <div>
-            <dt>Tiempo restante</dt>
-            <dd><span id="tiempo">60</span> <span class="unidad">s</span></dd>
-          </div>
-        </dl>
+        <!-- Marcadores a ambos lados del tablero -->
+        <div class="distribucion-juego">
+          <!-- Aciertos y fallos describen el resultado de los clics -->
+          <dl class="marcador marcador--izquierdo" aria-label="Aciertos y fallos">
+            <div>
+              <dt>Aciertos</dt>
+              <dd id="aciertos">0</dd>
+            </div>
+            <div>
+              <dt>Fallos</dt>
+              <dd id="fallos">0</dd>
+            </div>
+          </dl>
 
-        <!-- Área de juego: borde exterior y casillas sin líneas visibles -->
-        <div class="zona-juego">
-          <!-- Tablero: sus 16 casillas se crean desde app.js -->
-          <div id="tablero" class="tablero" role="group" aria-label="Tablero de 4 filas y 4 columnas"></div>
+          <!-- Área de juego: borde exterior y casillas sin líneas visibles -->
+          <div class="zona-juego">
+            <!-- Tablero: sus 24 casillas se crean desde app.js -->
+            <div id="tablero" class="tablero" role="group" aria-label="Tablero de 4 filas y 6 columnas"></div>
 
-          <!-- Esta capa se oculta al iniciar; el tablero permanece visible -->
-          <div id="pantalla-inicio" class="pantalla-inicio">
-            <p id="texto-pantalla">Cuatro objetivos. Afina tu puntería.</p>
-            <!-- Formulario visible al terminar; se valida desde JavaScript -->
-            <form id="formulario-alias" class="formulario-alias" hidden novalidate>
-              <label for="alias">Tu nombre o alias</label>
-              <input id="alias" name="alias" type="text" required maxlength="20" autocomplete="nickname" aria-describedby="ayuda-alias error-alias">
-              <p id="ayuda-alias">De 1 a 20 caracteres. Solo se usa en esta partida.</p>
-              <p id="error-alias" role="alert"></p>
-              <button id="ver-clasificacion" type="submit">Ver clasificación</button>
-            </form>
+            <!-- Esta capa se oculta al iniciar; el tablero permanece visible -->
+            <div id="pantalla-inicio" class="pantalla-inicio">
 
-            <!-- Cinco filas creadas con JavaScript al enviar un alias válido -->
-            <section id="clasificacion" class="clasificacion" hidden aria-labelledby="titulo-clasificacion">
-              <h3 id="titulo-clasificacion" tabindex="-1">Clasificación</h3>
-              <p>Demostración: cuatro rivales ficticios y tu resultado. No se guarda al recargar.</p>
-              <table>
-                <caption>Partidas de 60 segundos</caption>
-                <thead>
-                  <tr><th scope="col">Puesto</th><th scope="col">Alias</th><th scope="col">Puntos</th></tr>
-                </thead>
-                <tbody id="filas-clasificacion"></tbody>
-              </table>
-              <p>En empate, tu resultado aparece después del rival con los mismos puntos.</p>
-            </section>
-            <button id="iniciar" type="button" disabled>Iniciar entrenamiento</button>
+              <!-- Formulario visible al terminar; se valida desde JavaScript -->
+              <form id="formulario-alias" class="formulario-alias" hidden novalidate>
+                <label for="alias">Tu nombre o alias</label>
+                <input id="alias" name="alias" type="text" required maxlength="20" autocomplete="nickname" aria-describedby="requisitos-alias">
+                <div id="requisitos-alias" class="requisitos-alias">
+                  <p>El alias permitido tiene estos requisitos:</p>
+                  <ul>
+                    <li>Debe tener entre 1 y 20 caracteres de texto.</li>
+                    <li>El nombre no puede contener solo espacios.</li>
+                  </ul>
+                </div>
+                <button id="ver-clasificacion" type="submit">Ver clasificación</button>
+              </form>
+
+              <!-- Cinco filas creadas con JavaScript al enviar un alias válido -->
+              <section id="clasificacion" class="clasificacion" hidden aria-labelledby="titulo-clasificacion">
+                <h3 id="titulo-clasificacion" tabindex="-1">Clasificación</h3>
+                <table>
+                  <thead>
+                    <tr><th scope="col">Puesto</th><th scope="col">Alias</th><th scope="col">Puntos</th></tr>
+                  </thead>
+                  <tbody id="filas-clasificacion"></tbody>
+                </table>
+                <p>En el caso de empate, se queda en mejor posición el que lo hizo primero.</p>
+                <p>Solo se queda tu mejor puntuación</p>
+              </section>
+
+              <button id="iniciar" type="button" disabled>Iniciar<br>Entrenamiento</button>
+            </div>
           </div>
+
+          <!-- Tiempo y precisión describen la duración y el rendimiento -->
+          <dl class="marcador marcador--derecho" aria-label="Tiempo y precisión">
+            <div>
+              <dt>Tiempo restante</dt>
+              <dd><span id="tiempo">15</span> <span class="unidad">s</span></dd>
+            </div>
+            <div>
+              <dt>Precisión</dt>
+              <dd id="precision">0%</dd>
+            </div>
+          </dl>
         </div>
 
-        <!-- Mensaje de estado, visible también durante el entrenamiento -->
+        <!-- Controles y estado de la partida -->
         <div class="controles">
           <button id="reiniciar" type="button" hidden>Reiniciar partida</button>
-          <p id="estado" role="status">Pulsa Iniciar entrenamiento. Tienes 60 segundos para sumar puntos.</p>
+          <p id="estado" role="status">Pulsa Iniciar entrenamiento. Tienes 15 segundos para sumar puntos.</p>
         </div>
-      </section>
-
-      <!-- Instrucciones del juego -->
-      <section class="instrucciones" aria-labelledby="titulo-instrucciones">
-        <h2 id="titulo-instrucciones">Cómo jugar</h2>
-        <p>Pulsa las bolitas para sumar puntos. Hay cuatro a la vez y cada acierto crea otra en una casilla libre diferente. Pulsar una zona vacía no suma ni penaliza. También puedes seleccionar los objetivos con Tab y activarlos con Intro o Espacio.</p>
-        <p>La partida dura 60 segundos. Al terminar verás tus puntos. Escribe tu alias para ver la clasificación de demostración y volver a jugar. Reiniciar durante la partida descarta tus puntos y empieza otros 60 segundos.</p>
       </section>
 
       <!-- Aviso cuando JavaScript está desactivado -->
       <noscript>Activa JavaScript para que se genere el tablero.</noscript>
-      <!-- Pie de página -->
-      <footer>Prototipo · Clasificación de demostración · HTML, CSS y JavaScript puro</footer>
     </main>
+
+    <!-- Pie siempre visible; su contenido podrá ampliarse más adelante -->
+    <footer class="pie-pagina">
+      <p>La <b>"n"</b>oche comienza con su inicial.</p>
+    </footer>
   </body>
 </html>

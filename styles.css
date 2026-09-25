@@ -2,500 +2,409 @@
    GUÍA RÁPIDA PARA LEER CSS
    ==================================================
 
-   ESTRUCTURA DE UNA REGLA
-
    selector {
      propiedad: valor;
    }
 
-   El selector indica a qué elementos se aplica la regla.
-   Las llaves { } delimitan el bloque de estilos.
-   Dentro, cada declaración asigna un valor a una propiedad.
-   Ejemplo: color: green; establece el color del texto.
+   .nombre selecciona una clase reutilizable.
+   #nombre selecciona un id único.
+   * selecciona todos los elementos.
+   Una etiqueta sin prefijo, como button, selecciona todas las
+   etiquetas de ese tipo.
+   :nombre introduce una pseudoclase, como :focus-visible.
+   Un espacio selecciona descendientes: .panel p.
+   > selecciona hijos directos: .marcador > div.
+   @media agrupa reglas que se aplican bajo una condición.
 
-   .nombre — SELECTOR DE CLASE
-   .casilla selecciona todos los elementos con class="casilla".
-   Una clase se puede reutilizar en varios elementos.
-   Un elemento puede tener varias clases: class="casilla activa".
-
-   #nombre — SELECTOR DE ID
-   #iniciar selecciona el elemento con id="iniciar".
-   Cada id debe ser único dentro del documento HTML.
-   Aquí # forma parte del selector; en color: #183a33; indica
-   un color hexadecimal, no un id. Importa dónde aparece.
-
-   * — SELECTOR UNIVERSAL
-   Selecciona todos los elementos, independientemente de su etiqueta.
-   Ejemplo: * { box-sizing: border-box; }
-
-   etiqueta — NOMBRE DE ETIQUETA SIN PREFIJO
-   Cuando escribes directamente el nombre de una etiqueta, sin un
-   prefijo como . o #, seleccionas todos los elementos de ese tipo.
-   h1 aplica estilos a todos los <h1>; button, a todos los <button>.
-   En CSS se escribe el nombre sin los signos < >.
-
-   :nombre — PSEUDOCLASE
-   En un selector, los dos puntos introducen una pseudoclase:
-   selecciona elementos según un estado o una condición especial.
-   :root selecciona el elemento raíz del documento (en HTML, <html>).
-   Se suele usar para definir variables CSS y estilos base de la página.
-   No selecciona todos los elementos como *; algunas propiedades,
-   como el color del texto, pueden heredarse desde el elemento raíz.
-   :hover selecciona un elemento cuando el puntero está sobre él.
-   #iniciar:disabled selecciona ese botón cuando está deshabilitado.
-
-   espacio — DESCENDIENTES
-   .instrucciones p selecciona los <p> dentro de un elemento
-   con class="instrucciones", incluso si hay elementos intermedios.
-
-   > — HIJOS DIRECTOS
-   .marcador > div selecciona solo los <div> que son hijos directos
-   del marcador, no otros <div> anidados a mayor profundidad.
-
-   @media — REGLAS CONDICIONALES
-   No es un selector de elementos. Agrupa reglas que solo se aplican
-   si se cumple una condición, como un ancho de pantalla determinado.
-
-   Una misma etiqueta puede coincidir con varios selectores.
-   Por ejemplo, <button id="iniciar"> coincide con button y #iniciar.
-   El navegador combina sus estilos; si una propiedad entra en
-   conflicto, la cascada decide qué declaración prevalece.
-   En reglas normales de este archivo, un id tiene más especificidad
-   que una clase, y una clase más que una etiqueta. Si empatan,
-   prevalece la declaración que aparece después.
+   var(--nombre) lee una variable CSS. Las variables de color se
+   definen en :root y el modo oscuro cambia sus valores desde body.
    ================================================== */
 
 /* ==================================================
-   1. BASE GENERAL DE LA PÁGINA
+   1. COLORES Y BASE GENERAL
    ================================================== */
 
-/* Elemento raíz <html>: tipografía y colores generales. */
-:root {
-  /* Lista de fuentes por preferencia: system-ui usa la del sistema; sans-serif es la alternativa genérica sin remates. */
-  font-family: system-ui, sans-serif;
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #183a33;
-  /* Color del fondo del elemento; no cambia el color del texto. */
-  background-color: #f3f5ef;
+/* Carga la fuente incluida en el proyecto para que no dependa
+   de las fuentes instaladas en el equipo del usuario. */
+@font-face {
+  font-family: "Space Mono";
+  src: url("SpaceMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* Todos los elementos: incluye borde y relleno en el tamaño indicado. */
+:root {
+  font-family: "Space Mono", monospace;
+
+  /* Paleta clara utilizada por defecto. */
+  --color-fondo: #f3f5ef;
+  --color-superficie: #ffffff;
+  --color-superficie-suave: #eef1eb;
+  --color-tablero: #f8faf5;
+  --color-texto: #183a33;
+  --color-texto-secundario: #50645b;
+  --color-borde: #ced9ce;
+  --color-destacado: #ff2f2f;
+  --color-boton: #183a33;
+  --color-boton-texto: #ffffff;
+  --color-deshabilitado: #e3e8e0;
+  --color-fila-usuario: #e3ecdc;
+  --color-error: #9b2828;
+  --color-foco: #183a33;
+}
+
+/* La clase se añade y se elimina desde JavaScript al pulsar la tecla secreta. */
+body.modo-oscuro {
+  --color-fondo: #0c0e0f;
+  --color-superficie: #171a1c;
+  --color-superficie-suave: #23282b;
+  --color-tablero: #101315;
+  --color-texto: #f4f4f2;
+  --color-texto-secundario: #b9c0bd;
+  --color-borde: #3b4441;
+  --color-destacado: #f4f4f2;
+  --color-boton: #f4f4f2;
+  --color-boton-texto: #111314;
+  --color-deshabilitado: #2c3230;
+  --color-fila-usuario: #2a3330;
+  --color-error: #ff9f9f;
+  --color-foco: #ffffff;
+}
+
 * {
-  /* border-box incluye padding y borde dentro del ancho y alto declarados; el margen queda fuera. */
   box-sizing: border-box;
 }
 
-/* <body>: elimina el margen que añade el navegador por defecto. */
+html,
 body {
-  /* Espacio EXTERIOR: 0 elimina los márgenes en los cuatro lados. */
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  height: 100dvh;
   margin: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  transition: color 180ms ease, background-color 180ms ease;
 }
 
 /* ==================================================
-   2. CONTENEDOR PRINCIPAL
+   2. CONTENEDOR PRINCIPAL Y CABECERA
    ================================================== */
 
-/* <main class="entrenador">: limita el ancho y centra el contenido. */
 .entrenador {
-  /* min() elige el menor de DOS valores separados por la coma:
-     1) 100% - 32px: ancho del contenedor padre menos 32 píxeles CSS.
-     2) 640px: límite superior que queremos para el contenido.
-     Si el padre mide 400px, compara 368px con 640px y usa 368px.
-     Si mide 1000px, compara 968px con 640px y usa 640px.
-     La resta es parte del primer valor, no un tercer parámetro.
-     Junto a margin horizontal auto deja 16px a cada lado en el caso estrecho.
-  */
-  width: min(100% - 32px, 640px);
-  /* Espacio EXTERIOR: 48px arriba y abajo; auto reparte el espacio horizontal libre entre ambos lados y centra este bloque. */
-  margin: 48px auto;
+  width: 1000px;
+  max-width: calc(100% - 32px);
+  min-height: 0;
+  margin: 0 auto;
+  padding: 12px 0 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
 }
 
-/* ==================================================
-   3. CABECERA — <header class="cabecera">
-   ================================================== */
-
-/* Cabecera que agrupa la etiqueta de misión, el título y la descripción. */
 .cabecera {
-  /* Espacio EXTERIOR debajo del elemento: 28px. */
-  margin-bottom: 28px;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  text-align: center;
 }
 
-/* <p class="etiqueta">: texto «M1 · El Despertar del DOM». */
-.etiqueta {
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #50645b;
-  /* Tamaño del texto: 0.8rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
-  font-size: 0.8rem;
-  /* Grosor de la letra: 400 es normal; 700 es negrita, según los pesos disponibles en la fuente. */
-  font-weight: 700;
-  /* Espacio adicional entre caracteres, relativo al tamaño de letra de este elemento (em). El valor positivo los separa. */
-  letter-spacing: 0.08em;
-  /* uppercase muestra el texto en mayúsculas sin modificar el texto original del HTML. */
-  text-transform: uppercase;
+/* Coloca las dos dianas y el título en una sola fila. */
+.titulo-con-dianas {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 }
 
-/* El <h1> conserva el significado de título; su contenido es la imagen del alumno. */
+/* Las dianas son decorativas: JavaScript no interviene en ellas. */
+.diana-decorativa {
+  width: 56px;
+  flex-shrink: 0;
+  aspect-ratio: 1;
+  background-image: url("assets/img/diana.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Al cambiar el modo, CSS sustituye la imagen decorativa. */
+body.modo-oscuro .diana-decorativa {
+  background-image: url("assets/img/diana-modo-oscuro.png");
+}
+
+.descripcion {
+  margin-bottom: 12px;
+  color: var(--color-texto-secundario);
+}
+
+
+
+.descripcion {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* El h1 conserva el significado de título y recorta los márgenes
+   transparentes del PNG sin modificar el archivo original. */
 .titulo-juego {
-  /* Elimina el margen predeterminado del encabezado; separa la descripción inferior. */
-  margin: 0 0 16px;
+  width: 900px;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 5 / 1;
 }
 
 .titulo-juego img {
-  /* Evita el espacio de línea que deja una imagen inline. */
   display: block;
-  /* Se adapta al ancho disponible sin superar el contenedor. */
   width: 100%;
-  height: auto;
-  /* Franja de cuatro unidades de ancho por una de alto. El PNG original
-     es 1600 × 1200, pero el dibujo ocupa la zona central (y=444 a 766). */
-  aspect-ratio: 4 / 1;
-  /* Llena la franja sin deformar: recorta visualmente solo los márgenes
-     transparentes superiores e inferiores; el archivo permanece intacto. */
+  height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-/* <p class="descripcion">: frase situada debajo del título principal. */
-.descripcion {
-  /* Espacio EXTERIOR: 0 elimina los márgenes en los cuatro lados. */
-  margin: 0;
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #50645b;
-  /* Altura de cada línea: 1.6 veces el tamaño de su letra. Al no llevar unidad, se hereda como multiplicador. */
-  line-height: 1.6;
-}
-
 /* ==================================================
-   4. PANEL DE ENTRENAMIENTO
+   3. PANEL Y DISTRIBUCIÓN DEL JUEGO
    ================================================== */
 
-/* <section class="panel">: tarjeta que contiene el juego. */
 .panel {
-  /* Espacio INTERIOR entre contenido y borde. 24px en los cuatro lados. */
-  padding: 24px;
-  /* Tres componentes: 1px de grosor, solid para una línea continua y #d4ddd2 como color. */
-  border: 1px solid #d4ddd2;
-  /* Redondea las esquinas: el valor es el radio de la curva en cada esquina. */
+  min-height: 0;
+  padding: 10px;
+  border: 2px solid var(--color-destacado);
   border-radius: 20px;
-  /* Color del fondo del elemento; no cambia el color del texto. */
-  background-color: #ffffff;
+  background-color: var(--color-superficie);
+  transition: background-color 180ms ease, border-color 180ms ease;
 }
 
-/* <div class="encabezado-sesion">: alinea «Zona de entrenamiento» y «4 × 4». */
 .encabezado-sesion {
-  /* Activa Flexbox para distribuir los hijos directos; por defecto se colocan en una fila. */
-  display: flex;
-  /* Centra los hijos en el eje transversal; en esta fila flex, los alinea verticalmente. */
-  align-items: center;
-  /* space-between reparte el espacio horizontal sobrante entre los hijos; sitúa el primero y el último en los extremos. */
-  justify-content: space-between;
-  /* Separación de 12px entre filas y columnas de Grid, o entre elementos de Flexbox. No añade espacio en el borde exterior. */
-  gap: 12px;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
-/* Regla compartida por TODOS los <h2>: título del panel y título de instrucciones. */
 h2 {
-  /* Espacio EXTERIOR: 0 elimina los márgenes en los cuatro lados. */
   margin: 0;
-  /* Tamaño del texto: 1rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
   font-size: 1rem;
 }
 
-/* <span class="formato">: indicador «4 × 4» junto al título del panel. */
-.formato {
-  /* 0 impide que este elemento flex reduzca su ancho por falta de espacio en la fila. */
-  flex-shrink: 0;
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #50645b;
-  /* Tamaño del texto: 0.85rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
-  font-size: 0.85rem;
+/* Tres columnas: marcador izquierdo, tablero y marcador derecho. */
+.distribucion-juego {
+  display: grid;
+  grid-template-columns: 150px auto 150px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 0;
 }
 
 /* ==================================================
-   5. MARCADOR — aciertos y tiempo restante
+   4. MARCADORES LATERALES
    ================================================== */
 
-/* <dl class="marcador">: distribuye las dos estadísticas en columnas. */
 .marcador {
-  /* Activa CSS Grid para distribuir los hijos directos en una cuadrícula. */
   display: grid;
-  /* repeat(2, 1fr) repite 2 columnas. Cada 1fr recibe una parte igual del espacio disponible tras descontar los huecos; el contenido también puede imponer un mínimo. */
-  grid-template-columns: repeat(2, 1fr);
-  /* Separación de 12px entre filas y columnas de Grid, o entre elementos de Flexbox. No añade espacio en el borde exterior. */
-  gap: 12px;
-  /* Espacio EXTERIOR: 24px arriba y abajo; 0 a izquierda y derecha. */
-  margin: 24px 0;
+  align-content: center;
+  gap: 14px;
+  width: 100%;
+  margin: 0;
 }
 
-/* Cada <div> hijo directo del marcador: tarjeta de una estadística. */
 .marcador > div {
-  /* Espacio INTERIOR entre contenido y borde. 16px en los cuatro lados. */
-  padding: 16px;
-  /* Redondea las esquinas: el valor es el radio de la curva en cada esquina. */
+  min-height: 96px;
+  padding: 14px;
+  display: grid;
+  align-content: center;
+  text-align: center;
+  border: 1px solid transparent;
   border-radius: 12px;
-  /* Color del fondo del elemento; no cambia el color del texto. */
-  background-color: #f3f5ef;
+  background-color: var(--color-superficie-suave);
+  transition: background-color 180ms ease, border-color 180ms ease;
 }
 
-/* Todos los <dt>; aquí, las etiquetas «Aciertos» y «Tiempo restante». */
 dt {
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #50645b;
-  /* Tamaño del texto: 0.85rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
-  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+  font-size: 0.8rem;
 }
 
-/* Todos los <dd>; aquí, los valores de aciertos y tiempo del marcador. */
 dd {
-  /* Tres valores de margen: 4px arriba, 0 a izquierda y derecha, 0 abajo. */
   margin: 4px 0 0;
-  /* Tamaño del texto: 2rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
-  font-size: 2rem;
-  /* Grosor de la letra: 400 es normal; 700 es negrita, según los pesos disponibles en la fuente. */
+  font-size: 1.8rem;
   font-weight: 700;
-  /* tabular-nums pide dígitos de igual anchura, si la fuente los admite, para estabilizar el marcador al cambiar los números. */
   font-variant-numeric: tabular-nums;
 }
 
-/* <span class="unidad">: letra «s» que acompaña al tiempo en segundos. */
 .unidad {
-  /* Tamaño del texto: 1rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
-  font-size: 1rem;
-  /* Grosor de la letra: 400 es normal; 700 es negrita, según los pesos disponibles en la fuente. */
+  font-size: 0.9rem;
   font-weight: 400;
 }
 
 /* ==================================================
-   6. TABLERO Y CASILLAS
+   5. TABLERO, CASILLAS Y DIANAS
    ================================================== */
 
-/* Contenedor del tablero y de la pantalla de inicio superpuesta. */
 .zona-juego {
-  /* Referencia para posicionar la capa absoluta dentro de esta zona. */
   position: relative;
-  /* Delimita todo el terreno de juego sin dibujar las casillas. */
-  border: 1px solid #ced9ce;
+  width: 600px;
+  max-width: 100%;
+  aspect-ratio: 6 / 4;
+  overflow: hidden;
+  border: 2px solid var(--color-destacado);
   border-radius: 12px;
-  /* Un fondo suave distingue el área de juego del panel blanco. */
-  background-color: #f8faf5;
+  background-color: var(--color-tablero);
+  transition: background-color 180ms ease, border-color 180ms ease;
 }
 
-/* Capa que contiene el mensaje y el único botón de inicio. */
-.pantalla-inicio {
-  /* Se superpone sin añadir altura: el tablero sigue dando tamaño al contenedor. */
-  position: absolute;
-  /* Equivale a top, right, bottom y left a 0: cubre el área del contenedor. */
-  inset: 0;
-  /* Coloca mensaje y botón en columna y los centra en los dos ejes. */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /* Espacio entre ambos elementos y separación respecto a los bordes. */
-  gap: 16px;
-  padding: 16px;
-  /* Centra el texto si ocupa más de una línea. */
-  text-align: center;
-}
-
-.pantalla-inicio p {
-  /* Evita sumar los márgenes del párrafo al espacio definido con gap. */
-  margin: 0;
-  /* Altura de línea proporcional al tamaño de letra. */
-  line-height: 1.5;
-}
-
-/* [hidden] selecciona la capa cuando JavaScript activa su atributo hidden.
-   Esta regla prevalece sobre display: flex. Solo ocultamos la capa,
-   nunca .tablero ni .zona-juego, para conservar el área y las dianas. */
-.pantalla-inicio[hidden] {
-  display: none;
-}
-
-/* <div id="tablero" class="tablero">: cuadrícula de cuatro columnas. */
 .tablero {
-  /* Activa CSS Grid para distribuir los hijos directos en una cuadrícula. */
   display: grid;
-  /* repeat(4, 1fr) repite 4 columnas. Cada 1fr recibe una parte igual del espacio disponible tras descontar los huecos; el contenido también puede imponer un mínimo. */
-  grid-template-columns: repeat(4, 1fr);
-  /* Separación de 8px entre filas y columnas de Grid, o entre elementos de Flexbox. No añade espacio en el borde exterior. */
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   gap: 8px;
+  width: 100%;
+  height: 100%;
 }
 
-/* Cada <div class="casilla"> creado en app.js: contenedor cuadrado invisible para una diana. */
 .casilla {
-  /* Conservamos la distribución invisible: display: none ocultaría también
-     las dianas. Esto se aplica tanto a .casilla como a .tablero. */
   display: grid;
-  /* Centra la diana horizontal y verticalmente dentro de su casilla. */
   place-items: center;
-  /* Relación ancho / alto de 1: mantiene cada casilla cuadrada. */
   aspect-ratio: 1;
-  /* Sin bordes ni fondo visible, la cuadrícula deja de dibujarse. */
   border: 0;
   background-color: transparent;
 }
 
-/* <button class="objetivo">: diana creada desde JavaScript dentro de una casilla. */
 .objetivo {
-  /* Ocupa el 60% del ancho interior de su casilla. */
   width: 60%;
-  /* Igual ancho y alto; el radio del 50% mantiene el botón circular. */
   aspect-ratio: 1;
-  border-radius: 50%;
-  /* Elimina el relleno y borde predeterminados del botón. */
   padding: 0;
   border: 0;
-  /* El fondo transparente deja ver solo la imagen de la diana. */
+  border-radius: 50%;
   background-color: transparent;
-  /* Ruta relativa a este archivo CSS, dentro del propio proyecto. */
   background-image: url("assets/img/diana.png");
-  /* Ajusta la imagen completa al botón conservando sus proporciones. */
   background-size: contain;
-  /* Evita repetir la imagen y la centra en ambos ejes. */
   background-repeat: no-repeat;
   background-position: center;
-  /* Indica que la diana se puede pulsar. */
   cursor: pointer;
 }
 
+/* En modo oscuro las mismas cuatro dianas utilizan la imagen alternativa. */
+body.modo-oscuro .objetivo {
+  background-image: url("assets/img/diana-modo-oscuro.png");
+}
 
-
-
-/* Contorno visible al navegar con teclado; no cambia el tamaño del elemento. */
 .objetivo:focus-visible,
 #iniciar:focus-visible,
 #reiniciar:focus-visible,
 #ver-clasificacion:focus-visible,
 #alias:focus-visible {
-  outline: 3px solid #183a33;
+  outline: 3px solid var(--color-foco);
   outline-offset: 4px;
 }
 
 /* ==================================================
-   7. CONTROLES — estado e inicio de partida
+   6. PANTALLA CENTRAL, FORMULARIO Y CLASIFICACIÓN
    ================================================== */
 
-/* <div class="controles">: espacio para el mensaje de estado debajo del tablero. */
-.controles {
-  /* Espacio EXTERIOR encima del elemento: 20px. */
-  margin-top: 20px;
+.pantalla-inicio {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px;
+  text-align: center;
 }
 
-/* <p id="estado">: mensaje sobre la disponibilidad o el estado de la partida. */
-#estado {
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #50645b;
-  /* Tamaño del texto: 0.9rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
-  font-size: 0.9rem;
-  /* Altura de cada línea: 1.6 veces el tamaño de su letra. Al no llevar unidad, se hereda como multiplicador. */
-  line-height: 1.6;
+.pantalla-inicio p {
+  margin: 0;
+  line-height: 1.35;
 }
 
-/* Regla compartida por TODOS los botones: inicio y objetivos heredan la tipografía. */
-button {
-  /* inherit hace que las propiedades tipográficas incluidas en font tomen los valores del elemento padre. */
-  font: inherit;
-}
-
-/* <button id="iniciar">: tamaño y forma del botón «Iniciar entrenamiento». */
-#iniciar {
-  /* Aspecto del botón cuando está disponible; :disabled lo sobrescribe. */
-  color: #ffffff;
-  background-color: #183a33;
-  cursor: pointer;
-  /* Ocupa el ancho disponible hasta un máximo de 260px. */
-  width: min(100%, 260px);
-  /* Altura mínima: puede crecer si el contenido necesita más espacio; no fija una altura máxima. */
-  min-height: 48px;
-  /* Espacio INTERIOR entre contenido y borde. 12px arriba y abajo; 20px a izquierda y derecha. */
-  padding: 12px 20px;
-  /* 0 elimina el borde. */
-  border: 0;
-  /* Redondea las esquinas: el valor es el radio de la curva en cada esquina. */
-  border-radius: 10px;
-  /* Grosor de la letra: 400 es normal; 700 es negrita, según los pesos disponibles en la fuente. */
-  font-weight: 700;
-}
-
-/* El mismo botón de inicio cuando tiene el atributo disabled (deshabilitado). */
-#iniciar:disabled {
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #526057;
-  /* Color del fondo del elemento; no cambia el color del texto. */
-  background-color: #e3e8e0;
-  /* not-allowed muestra un cursor de acción no permitida. El bloqueo real lo hace disabled en HTML o JavaScript. */
-  cursor: not-allowed;
-}
-
-/* Botón secundario debajo del tablero: reinicia una partida en curso. */
-#reiniciar {
-  /* Relleno vertical y horizontal, borde fino y esquinas redondeadas. */
-  padding: 10px 16px;
-  border: 1px solid #ced9ce;
-  border-radius: 10px;
-  /* Apariencia secundaria para diferenciarlo del inicio central. */
-  color: #183a33;
-  background-color: #f3f5ef;
-  cursor: pointer;
-}
-
-/* Solo se muestra durante una partida activa. */
-#reiniciar[hidden] {
+.pantalla-inicio[hidden] {
   display: none;
 }
 
-/* ==================================================
-   RESULTADO, ALIAS Y CLASIFICACIÓN — dentro de la pantalla central
-   ================================================== */
-
-/* En pantallas pequeñas, el resultado puede desplazarse dentro del tablero. */
+/* El desplazamiento, si hiciera falta, queda dentro del resultado y no
+   desplaza la página completa. En el tamaño de referencia todo cabe. */
 .pantalla-inicio.resultado {
-  /* Empieza arriba para que el contenido no quede recortado al centrarlo. */
   justify-content: flex-start;
-  /* Permite desplazamiento vertical solo si el contenido supera la altura. */
   overflow-y: auto;
 }
 
 .pantalla-inicio.resultado > * {
-  /* Evita que Flexbox comprima el formulario o la tabla para hacerlos caber. */
   flex-shrink: 0;
 }
 
 .formulario-alias {
-  /* Ordena etiqueta, campo, ayuda y botón en una columna. */
   display: grid;
-  gap: 10px;
-  /* Limita su anchura sin desbordar una pantalla estrecha. */
+  gap: 8px;
   width: min(100%, 320px);
   text-align: left;
 }
 
 #alias {
-  /* Ocupa el formulario; min-width evita el mínimo intrínseco del input. */
   width: 100%;
   min-width: 0;
-  padding: 10px;
-  border: 1px solid #50645b;
+  padding: 9px;
+  border: 1px solid var(--color-borde);
   border-radius: 8px;
-  /* Hereda la letra; 1rem facilita la lectura del campo. */
+  color: var(--color-texto);
+  background-color: var(--color-superficie);
   font: inherit;
   font-size: 1rem;
 }
 
-#error-alias {
-  /* El mensaje explica el error, además de señalarlo mediante el color. */
-  color: #9b2828;
+.requisitos-alias {
+  color: var(--color-texto-secundario);
+  font-size: 0.78rem;
+  line-height: 1.35;
 }
 
+.requisitos-alias ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+.requisitos-alias--error {
+  color: var(--color-error);
+}
+
+button {
+  font: inherit;
+}
+
+#iniciar,
 #ver-clasificacion {
-  /* Botón principal del formulario: envío sin recargar la página. */
-  padding: 12px;
+  min-height: 44px;
+  padding: 10px 18px;
   border: 0;
   border-radius: 10px;
-  color: #ffffff;
-  background-color: #183a33;
+  color: var(--color-boton-texto);
+  background-color: var(--color-boton);
+  font-weight: 700;
   cursor: pointer;
+}
+
+#iniciar {
+  width: 280px;
+  max-width: 100%;
+  min-height: 90px;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+#iniciar:disabled {
+  color: var(--color-texto-secundario);
+  background-color: var(--color-deshabilitado);
+  cursor: not-allowed;
 }
 
 .clasificacion {
@@ -503,48 +412,41 @@ button {
 }
 
 .clasificacion h3 {
-  margin: 0 0 8px;
+  margin: 0 0 4px;
 }
 
-.clasificacion p,
-#ayuda-alias,
-#error-alias {
-  font-size: 0.85rem;
+.clasificacion p {
+  font-size: 0.78rem;
 }
 
 .clasificacion table {
   width: 100%;
-  /* Une los bordes contiguos para que no aparezcan líneas dobles. */
+  margin: 7px 0;
   border-collapse: collapse;
-  /* Reparte el espacio según las columnas, sin crecer por un alias largo. */
   table-layout: fixed;
-  margin: 12px 0;
+  font-size: 0.82rem;
 }
 
 .clasificacion caption {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .clasificacion th,
 .clasificacion td {
-  padding: 8px 4px;
-  border-bottom: 1px solid #ced9ce;
-  /* Permite partir un alias largo aunque no contenga espacios. */
+  padding: 5px 3px;
+  border-bottom: 1px solid var(--color-borde);
   overflow-wrap: anywhere;
 }
 
 .clasificacion th:nth-child(2) {
-  /* Reserva la mitad del ancho al alias; nth-child(2) indica la segunda celda. */
   width: 50%;
 }
 
 .fila-usuario {
-  /* La etiqueta «(tú)» identifica la fila también sin depender del color. */
-  background-color: #e3ecdc;
+  background-color: var(--color-fila-usuario);
   font-weight: 700;
 }
 
-/* hidden debe prevalecer sobre display: grid del formulario. */
 #formulario-alias[hidden],
 #clasificacion[hidden],
 #iniciar[hidden] {
@@ -552,59 +454,184 @@ button {
 }
 
 /* ==================================================
-   8. INSTRUCCIONES DEL JUEGO
+   7. CONTROLES Y MENSAJE DE ESTADO
    ================================================== */
 
-/* <section class="instrucciones">: separación respecto al panel de juego. */
-.instrucciones {
-  /* Espacio EXTERIOR encima del elemento: 24px. */
-  margin-top: 24px;
+.controles {
+  min-height: 40px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
-/* Párrafo dentro de las instrucciones: explicación de las reglas del juego. */
-.instrucciones p {
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #50645b;
-  /* Altura de cada línea: 1.7 veces el tamaño de su letra. Al no llevar unidad, se hereda como multiplicador. */
-  line-height: 1.7;
+#estado {
+  margin: 0;
+  flex: 1;
+  color: var(--color-texto-secundario);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  text-align: center;
 }
 
-/* ==================================================
-   9. AVISO SIN JAVASCRIPT Y PIE DE PÁGINA
-   ================================================== */
+/* Durante la partida el estado está vacío; al ocultarlo, el botón de
+   reinicio queda centrado debajo del tablero. */
+#estado:empty {
+  display: none;
+}
 
-/* <noscript>: aviso visible cuando JavaScript está desactivado. */
+#reiniciar {
+  flex-shrink: 0;
+  padding: 9px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  color: var(--color-texto);
+  background-color: var(--color-superficie-suave);
+  cursor: pointer;
+}
+
+#reiniciar[hidden] {
+  display: none;
+}
+
 noscript {
-  /* Hace que el elemento genere una caja de bloque, que normalmente comienza en una línea nueva. */
   display: block;
-  /* Espacio EXTERIOR encima del elemento: 16px. */
-  margin-top: 16px;
-}
-
-/* <footer>: texto final con el estado del prototipo y las tecnologías usadas. */
-footer {
-  /* Espacio EXTERIOR encima del elemento: 32px. */
-  margin-top: 32px;
-  /* Color del texto. #RRGGBB expresa rojo, verde y azul en hexadecimal. */
-  color: #50645b;
-  /* Tamaño del texto: 0.8rem es relativo a la fuente del elemento raíz (<html>); 1rem equivale a su tamaño, habitualmente 16px. */
-  font-size: 0.8rem;
+  text-align: center;
 }
 
 /* ==================================================
-   10. PANTALLAS PEQUEÑAS — ancho de hasta 480 píxeles CSS
-   Estas reglas ajustan las anteriores cuando se cumple la condición.
+   8. PIE DE PÁGINA Y PISTA DE LA TECLA SECRETA
    ================================================== */
-@media (max-width: 480px) {
-  /* El mismo <main class="entrenador">: reduce sus márgenes verticales. */
+
+.pie-pagina {
+  min-height: 34px;
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px solid var(--color-destacado);
+  color: var(--color-texto-secundario);
+  background-color: var(--color-superficie);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.pie-pagina p {
+  margin: 0;
+}
+
+/* ==================================================
+   9. AJUSTES PARA VENTANAS BAJAS
+   Mantienen el juego completo dentro de la vista de escritorio.
+   ================================================== */
+
+@media (max-height: 760px) and (min-width: 701px) {
   .entrenador {
-    /* Espacio EXTERIOR: 24px arriba y abajo; auto reparte el espacio horizontal libre entre ambos lados y centra este bloque. */
-    margin: 24px auto;
+    padding: 6px 0;
+    gap: 5px;
   }
 
-  /* La misma <section class="panel">: reduce el relleno interior. */
+  .cabecera {
+    gap: 0;
+  }
+
+  .titulo-juego {
+    width: min(55vw, 380px);
+  }
+
+  .descripcion {
+    font-size: 0.85rem;
+  }
+
   .panel {
-    /* Espacio INTERIOR entre contenido y borde. 16px en los cuatro lados. */
-    padding: 16px;
+    padding: 11px;
+  }
+
+  .encabezado-sesion {
+    margin-bottom: 7px;
+  }
+
+  .zona-juego {
+    width: 600px;
+  }
+
+  .marcador > div {
+    min-height: 76px;
+    padding: 10px;
+  }
+
+  .controles {
+    min-height: 34px;
+    margin-top: 6px;
+  }
+}
+
+/* ==================================================
+   10. PANTALLAS ESTRECHAS
+   Aquí se permite desplazamiento para no ocultar contenido esencial.
+   ================================================== */
+
+@media (max-width: 700px) {
+  body {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .entrenador {
+    width: min(calc(100% - 24px), 560px);
+    padding: 14px 0;
+    justify-content: flex-start;
+  }
+
+  .titulo-juego {
+    width: min(100%, 430px);
+  }
+
+  /* En pantallas estrechas se ocultan para dejar espacio al título. */
+  .diana-decorativa {
+    display: none;
+  }
+
+  .panel {
+    padding: 12px;
+  }
+
+  .distribucion-juego {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .marcador {
+    align-self: stretch;
+    gap: 10px;
+  }
+
+  .marcador--izquierdo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .marcador--derecho {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .marcador > div {
+    min-height: 74px;
+    padding: 10px;
+  }
+
+  .zona-juego {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    max-width: 600px;
+    justify-self: center;
+  }
+
+  .controles {
+    flex-direction: column;
   }
 }
