@@ -2,12 +2,9 @@
 
 ## Prioridad actual
 
-- [x] Revisar personalmente los últimos cambios visuales.
-- [x] Revisar el proyecto con la herramienta o *skill* evaluadora del curso.
-- [x] Corregir únicamente los problemas reales encontrados durante esa evaluación.
-- [x] Repasar todo el código y resolver los conceptos señalados por el alumno.
+No quedan tareas de desarrollo. El repositorio está preparado para el commit y la publicación definitivos. Los comandos y la comprobación de GitHub son acciones de entrega y no requieren volver a modificar estas notas.
 
-## Comprobaciones manuales pendientes
+## Comprobaciones manuales opcionales no bloqueantes
 
 - [ ] Empatar a puntos con un rival y superarlo mediante una precisión mayor.
 - [ ] Empatar en puntos y precisión y comprobar que permanece delante la marca anterior.
@@ -18,27 +15,28 @@
 ## Cierre de diseño
 
 - [x] Aplicar los últimos cambios visuales después de terminar las funcionalidades.
-- [ ] Revisar el resultado en escritorio y en una pantalla estrecha.
-- [ ] Comprobar contraste, foco visible y ausencia de contenido cortado.
+- [x] Revisar el resultado en escritorio y en una pantalla estrecha.
+- [x] Comprobar contraste, foco visible y ausencia de contenido cortado.
 
 ## Preparación para la defensa
 
-- [ ] Repasar `index.html` de arriba abajo y explicar cada bloque.
-- [ ] Repasar `styles.css` por sus secciones y anotar cualquier propiedad desconocida.
-- [ ] Repasar `app.js` siguiendo el recorrido descrito en [[Contexto]].
-- [ ] Preguntar y documentar cualquier función, método, propiedad o parámetro que no se pueda explicar.
-- [ ] Distinguir qué escribió el alumno, qué generó Codex y cómo se comprobó.
-- [ ] Preparar una explicación breve de las dos decisiones incluidas en la autopsia.
+- [x] Repasar `index.html` de arriba abajo y explicar cada bloque.
+- [x] Repasar `styles.css` por sus secciones y anotar cualquier propiedad desconocida.
+- [x] Repasar `app.js` siguiendo el recorrido descrito en [[Contexto]].
+- [x] Preguntar y documentar las funciones, métodos, propiedades y parámetros señalados por el alumno.
+- [x] Distinguir qué escribió el alumno, qué generó Codex y cómo se comprobó.
+- [x] Preparar una explicación breve de las dos decisiones incluidas en la autopsia.
 
 ## Revisión final de la entrega
 
 - [x] Adjuntar o activar la herramienta de evaluación utilizada por el curso.
 - [x] Revisar el proyecto con la rúbrica completa de 100 puntos.
 - [x] Confirmar que el README contiene «Uso de IA» y «Autopsia» actualizados.
-- [ ] Confirmar que el repositorio es público y no contiene archivos temporales.
-- [ ] Comprobar que los commits representan avances comprensibles.
-- [ ] Ejecutar la revisión manual completa sin errores en consola.
+- [x] Confirmar que el repositorio es público y no contiene archivos temporales.
+- [x] Comprobar que los commits representan avances comprensibles.
+- [x] Ejecutar la revisión manual principal sin errores propios del proyecto en consola.
 - [x] Actualizar [[Contexto]], [[Decisiones]] y esta lista con el estado final.
+- [x] Ejecutar Ricardo sobre la revisión publicada y registrar el resultado.
 
 ## Bloqueos
 

@@ -86,6 +86,22 @@ Después, añadir únicamente los archivos esperados, revisar el área preparada
 
 ## 6. Mantener el README obligatorio
 
+El README final debe servir a una persona que no conozca las fases del proyecto. No debe conservar apartados provisionales como «Estado actual», «Próximos pasos» o listas de tareas ya cerradas. La estructura reutilizable se encuentra en [[Plantilla-README]].
+
+Orden recomendado:
+
+1. descripción completa del proyecto;
+2. instrucciones para probarlo;
+3. tecnologías y dependencias;
+4. archivos principales;
+5. funcionalidades finales;
+6. comprobaciones realizadas;
+7. uso de IA;
+8. preguntas y decisiones del desarrollo;
+9. Autopsia.
+
+Las comprobaciones no deben eliminarse al finalizar: se resumen y se distingue cuáles realizó el alumno, cuáles ejecutó el agente y cuáles no se verificaron. Evitar explicar la misma funcionalidad en varios apartados.
+
 ### Uso de IA
 
 Debe indicar:
@@ -105,6 +121,8 @@ Seleccionar dos decisiones discutibles del resultado final. Para cada una:
 2. justificarla;
 3. indicar una alternativa real descartada;
 4. describir el coste o limitación de la elección.
+
+La redacción pertenece al alumno. Cuando entregue un texto para la Autopsia, el agente debe copiarlo literalmente: no puede corregir ortografía, reformular, ampliar ni sustituir expresiones salvo que el alumno solicite de forma explícita una modificación concreta. Las recomendaciones deben darse aparte.
 
 ## 7. Comprobar antes de entregar
 
@@ -149,4 +167,33 @@ Para cada función conviene poder responder:
 - Registrar en `Decisiones.md` solo elecciones relevantes.
 - Crear una nota de sesión para hitos, errores importantes o cierres de fase.
 - Guardar código y documentación en el mismo commit cuando describan el mismo avance.
+
+## 10. Evaluar la entrega con Ricardo
+
+Usar la skill `ricardo` cuando se pida revisar, evaluar o calificar un repositorio. Antes de ejecutarla, publicar la versión candidata a entrega y comprobar que `HEAD` coincide con `origin/main`.
+
+Preparar estos datos:
+
+- URL o ruta local del repositorio;
+- nombre y descripción de la misión;
+- lenguajes o tecnologías esperadas;
+- fecha límite de los commits;
+- criterios adicionales, si existen.
+
+Ricardo revisa estructura, código, historial, README, limpieza del repositorio, funcionalidad y documentación. También busca secretos e intentos de manipular la evaluación. El procedimiento completo, los pesos y un prompt reutilizable están en [[Evaluacion-Ricardo]].
+
+La evaluación debe guardarse en una nota de sesión con el commit exacto analizado. Si se cambia el código después, la nota anterior deja de describir la revisión final y debe repetirse la evaluación.
+
+## 11. Cierre y entrega
+
+1. Confirmar que el recorrido principal funciona y que la consola no muestra errores propios.
+2. Reorganizar el README con [[Plantilla-README]].
+3. Actualizar `Contexto.md`, `Decisiones.md` y `Pendientes.md`.
+4. Crear una nota final en `Sesiones/`.
+5. Ejecutar `git diff --check` y la comprobación de sintaxis disponible.
+6. Revisar que `.obsidian/`, temporales y pruebas auxiliares no entren en Git.
+7. Hacer commit y push personalmente.
+8. Ejecutar Ricardo sobre el commit publicado.
+9. Corregir solo problemas reales y repetir la evaluación si cambia la entrega.
+10. Verificar el repositorio en GitHub y entregar antes de la fecha límite.
 

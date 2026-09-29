@@ -8,7 +8,7 @@
 - **Proyecto:** Aim Trainer.
 - **Repositorio público:** <https://github.com/chiissuu/aim-trainer>
 - **Tecnologías:** HTML, CSS y JavaScript puro.
-- **Estado:** desarrollo funcional y README finalizados; queda preparar el commit de cierre y realizar las comprobaciones manuales opcionales anotadas en `Pendientes.md`.
+- **Estado:** desarrollo, diseño, README, Autopsia y documentación de cierre finalizados. Ricardo v3.1 otorgó 10/10 al commit `44fe31c`; la entrega está lista para su publicación definitiva.
 
 ## Objetivo de la misión
 
@@ -30,7 +30,7 @@ Cuando el alumno entregue un texto redactado para la Autopsia, debe añadirse ex
 
 ## Funcionamiento actual
 
-1. Al cargar la página, JavaScript crea 24 botones que forman un tablero de 6 columnas por 4 filas.
+1. Al cargar la página, JavaScript crea 24 casillas `div` que forman un tablero de 6 columnas por 4 filas; durante la partida inserta seis botones-diana.
 2. La pantalla inicial muestra el botón para comenzar.
 3. Al iniciar, aparecen seis dianas en casillas distintas y comienza una partida de 15 segundos.
 4. Pulsar una diana suma un acierto y la recoloca en una casilla libre.
@@ -102,4 +102,17 @@ Clasificación y nueva partida
 - El mensaje de consola procedente de `content.js` pertenece a una extensión del navegador, no al proyecto.
 - La sintaxis de JavaScript y las pruebas simuladas del flujo principal han pasado.
 - Las cuatro pantallas principales se comprobaron en ambos modos; el diseño inicial cabe sin desplazamiento vertical a 1366 × 768 y 390 × 844 píxeles CSS.
+
+## Evaluación final con Ricardo
+
+- **Versión:** Ricardo v3.1.
+- **Fecha de evaluación:** 29 de septiembre de 2026.
+- **Commit evaluado:** `44fe31c`.
+- **Resultado:** 10/10.
+- **Historial:** 7 commits repartidos en 4 días.
+- **Penalizaciones:** ninguna.
+- **Intentos de inyección:** ninguno detectado.
+- **Observación no penalizada:** no existen pruebas automatizadas versionadas; el README distingue las comprobaciones manuales de las simuladas por Codex.
+
+El procedimiento reutilizable y la plantilla de petición están en [[Evaluacion-Ricardo]].
 

@@ -8,6 +8,14 @@ Este documento recoge elecciones que afectan al funcionamiento, la estructura o 
 
 **Motivo:** elimina el seguimiento provisional y las repeticiones entre fases, pero conserva los datos necesarios para ejecutar, evaluar y defender el proyecto. Las comprobaciones permanecen resumidas para distinguir las realizadas manualmente de las simuladas por Codex. La Autopsia se conserva exactamente con la redacción entregada por el alumno.
 
+## Evaluación final con Ricardo
+
+**Decisión:** ejecutar Ricardo únicamente después de cerrar y publicar el código, el README y la Autopsia.
+
+**Motivo:** la evaluación debe analizar la misma revisión que se pretende entregar. Se proporcionan siempre el repositorio, el ejercicio, las tecnologías, la fecha límite y cualquier criterio adicional.
+
+**Resultado en M1:** Ricardo v3.1 evaluó el commit `44fe31c` con 10/10, sin penalizaciones ni intentos de inyección. La falta de pruebas automatizadas se indicó como posible mejora futura, pero no restó puntos en la rúbrica utilizada.
+
 ## Idea del proyecto
 
 **Decisión:** desarrollar un aim trainer.
@@ -44,7 +52,7 @@ Este documento recoge elecciones que afectan al funcionamiento, la estructura o 
 
 **Motivo:** la versión actual ya cumple la misión y mantiene una dificultad adecuada para poder defender el código línea a línea. Permitir distintas duraciones y cantidades de objetivos añadiría validaciones, nuevos estados de interfaz y puntuaciones difíciles de comparar.
 
-**Alternativa descartada:** un botón «Editar parámetros» con valores de 15 a 60 segundos y de 3 a 10 objetivos.
+**Alternativa descartada:** un botón «Editar parámetros» con valores de 15 a 60 segundos y de 1 a 10 objetivos.
 
 ## Temporizador basado en una hora límite
 
