@@ -8,6 +8,7 @@
 - **Proyecto:** Aim Trainer.
 - **Repositorio público:** <https://github.com/chiissuu/aim-trainer>
 - **Tecnologías:** HTML, CSS y JavaScript puro.
+- **Estado:** desarrollo funcional y README finalizados; queda preparar el commit de cierre y realizar las comprobaciones manuales opcionales anotadas en `Pendientes.md`.
 
 ## Objetivo de la misión
 
@@ -23,6 +24,10 @@ Construir una página interactiva sin frameworks ni librerías, manipulando el D
 
 La regla principal del curso es que la IA está permitida, pero el alumno debe poder explicar lo entregado línea a línea.
 
+## Regla de autoría de la Autopsia
+
+Cuando el alumno entregue un texto redactado para la Autopsia, debe añadirse exactamente como lo ha escrito. El agente no puede corregirlo, reformularlo, ampliarlo ni sustituir expresiones propias del alumno, ya que este apartado debe conservar íntegramente su autoría. Cualquier posible corrección o recomendación deberá explicarse aparte y solo podrá aplicarse si el alumno lo solicita expresamente.
+
 ## Funcionamiento actual
 
 1. Al cargar la página, JavaScript crea 24 botones que forman un tablero de 6 columnas por 4 filas.
@@ -37,6 +42,8 @@ La regla principal del curso es que la IA está permitida, pero el alumno debe p
 10. El botón para volver a jugar inicia otro intento sin recargar la página.
 
 La mejor marca se guarda en variables. No se usa `localStorage`, por lo que se pierde al recargar.
+
+Las acciones principales son rojas en modo claro y blancas en modo oscuro. El reinicio conserva un estilo secundario. Los bordes del panel, el tablero y el footer tienen 3 píxeles, y la pista visual del footer señala la tecla secreta `N`.
 
 ## Recorrido mental del programa
 
@@ -94,4 +101,5 @@ Clasificación y nueva partida
 - Mantener Intro o Espacio sobre una diana no activa la repetición automática.
 - El mensaje de consola procedente de `content.js` pertenece a una extensión del navegador, no al proyecto.
 - La sintaxis de JavaScript y las pruebas simuladas del flujo principal han pasado.
+- Las cuatro pantallas principales se comprobaron en ambos modos; el diseño inicial cabe sin desplazamiento vertical a 1366 × 768 y 390 × 844 píxeles CSS.
 

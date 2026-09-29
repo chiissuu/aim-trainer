@@ -2,9 +2,10 @@
 
 ## Prioridad actual
 
-- [ ] Definir con el alumno qué parámetros podrá personalizar el jugador.
-- [ ] Implementar esa configuración con controles y lógica sencillos.
-- [ ] Probar que iniciar, reiniciar y volver a jugar respetan los parámetros elegidos.
+- [x] Revisar personalmente los últimos cambios visuales.
+- [x] Revisar el proyecto con la herramienta o *skill* evaluadora del curso.
+- [x] Corregir únicamente los problemas reales encontrados durante esa evaluación.
+- [x] Repasar todo el código y resolver los conceptos señalados por el alumno.
 
 ## Comprobaciones manuales pendientes
 
@@ -16,7 +17,7 @@
 
 ## Cierre de diseño
 
-- [ ] Aplicar los últimos cambios visuales después de terminar las funcionalidades.
+- [x] Aplicar los últimos cambios visuales después de terminar las funcionalidades.
 - [ ] Revisar el resultado en escritorio y en una pantalla estrecha.
 - [ ] Comprobar contraste, foco visible y ausencia de contenido cortado.
 
@@ -31,13 +32,13 @@
 
 ## Revisión final de la entrega
 
-- [ ] Adjuntar o activar la herramienta de evaluación utilizada por el curso.
-- [ ] Revisar el proyecto con la rúbrica completa de 100 puntos.
-- [ ] Confirmar que el README contiene «Uso de IA» y «Autopsia» actualizados.
+- [x] Adjuntar o activar la herramienta de evaluación utilizada por el curso.
+- [x] Revisar el proyecto con la rúbrica completa de 100 puntos.
+- [x] Confirmar que el README contiene «Uso de IA» y «Autopsia» actualizados.
 - [ ] Confirmar que el repositorio es público y no contiene archivos temporales.
 - [ ] Comprobar que los commits representan avances comprensibles.
 - [ ] Ejecutar la revisión manual completa sin errores en consola.
-- [ ] Actualizar [[Contexto]], [[Decisiones]] y esta lista con el estado final.
+- [x] Actualizar [[Contexto]], [[Decisiones]] y esta lista con el estado final.
 
 ## Bloqueos
 
@@ -54,4 +55,7 @@ No hay bloqueos actuales.
 - [x] Modo oscuro mediante la tecla secreta `N`.
 - [x] Diseño compacto con recursos gráficos y tipografía Space Mono.
 - [x] Documentación inicial para Obsidian.
+- [x] Cierre del alcance funcional: se mantienen 15 segundos y seis objetivos.
+- [x] Botones, bordes, textos destacados y footer ajustados en ambos modos.
+- [x] Guías de estudio añadidas en HTML, CSS y JavaScript para repasar semántica, selectores, DOM, estado y funciones.
 

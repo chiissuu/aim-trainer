@@ -8,13 +8,14 @@ Esta bóveda reúne el contexto de desarrollo, las decisiones, las tareas y el a
 - [[Decisiones]] — decisiones importantes, motivos y alternativas descartadas.
 - [[Pendientes]] — siguiente trabajo y comprobaciones aún no confirmadas.
 - [[Metodologia-Misiones]] — proceso reutilizable para las próximas misiones del curso.
-- [[Sesiones/2026-09-25-Clasificacion-y-precision]] — último bloque documentado.
+- [[Sesiones/2026-09-28-Ajustes-visuales-finales]] — último bloque documentado.
+- [[Sesiones/2026-09-25-Clasificacion-y-precision]] — clasificación y precisión.
 
 ## Estado actual
 
 El recorrido principal ya permite iniciar una partida de 15 segundos, acertar o fallar, calcular la precisión, reiniciar, registrar un alias y consultar una clasificación ficticia. También existe un modo oscuro activado con la tecla secreta `N`.
 
-La siguiente ampliación prevista es permitir personalizar ciertos parámetros de la partida. Antes de implementarla hay que concretar cuáles serán configurables y mantener una dificultad que pueda defenderse línea a línea.
+El alcance funcional queda cerrado con partidas de 15 segundos y seis objetivos. Los últimos ajustes visuales ya están aplicados; los siguientes pasos son revisar personalmente el resultado, analizar la entrega con la herramienta evaluadora del curso y repasar el código completo antes de la defensa.
 
 ## Cómo trabajar con estas notas
 

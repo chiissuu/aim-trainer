@@ -5,8 +5,7 @@
     <meta charset="UTF-8">      <!-- Codificación del texto | UTF-8 permite representar tildes, la ñ, símbolos y muchos otros caracteres -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- Adapta el ancho de la página al dispositivo y establece la escala inicial al 100 % -->
     <title>Aim Trainer - chiissuu</title>
-    <!-- Icono de la pestaña del navegador -->
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon.png">     <!-- Icono de la pestaña del navegador -->
     <link rel="stylesheet" href="styles.css">     <!-- Enlaza la hoja de estilos -->
     <script src="app.js" defer></script>    <!-- Enlaza JavaScript; defer espera a que el HTML esté preparado -->
   </head>
@@ -110,9 +109,97 @@
       <noscript>Activa JavaScript para que se genere el tablero.</noscript>
     </main>
 
-    <!-- Pie siempre visible; su contenido podrá ampliarse más adelante -->
+    <!-- Pie siempre visible con la pista de la tecla secreta -->
     <footer class="pie-pagina">
-      <p>La <b>"n"</b>oche comienza con su inicial.</p>
+      <p>
+        <span>La </span><kbd class="tecla-modo">N</kbd><span>oche comienza con su inicial...</span>
+      </p>
     </footer>
+
+    <!-- ==================================================
+         GUÍA DE ESTUDIO: ETIQUETAS UTILIZADAS EN EL BODY
+         Estos comentarios no aparecen visualmente en la página.
+         ================================================== -->
+
+    <!-- SPAN
+         <span> es un contenedor genérico para una parte pequeña de contenido.
+         Normalmente se utiliza dentro de una línea de texto o de otro elemento.
+         No aporta un significado semántico propio: sirve para agrupar contenido
+         y poder aplicarle CSS, identificarlo desde JavaScript o añadir atributos.
+
+         En <span class="diana-decorativa" aria-hidden="true"></span> el span
+         está vacío porque la diana se coloca como imagen de fondo desde CSS.
+         aria-hidden="true" indica a los lectores de pantalla que deben ignorarlo,
+         ya que esa diana es decorativa y no aporta información necesaria. -->
+
+    <!-- DIFERENCIA ENTRE CLASS E ID
+         class identifica uno o varios elementos que comparten una función o
+         unos estilos. Una misma clase puede repetirse y un elemento puede tener
+         varias clases. En CSS se selecciona con un punto: .encabezado-sesion.
+
+         id identifica un único elemento dentro de la página y no debe repetirse.
+         En CSS se selecciona con #: #titulo-sesion. JavaScript también puede
+         localizarlo con querySelector("#titulo-sesion").
+
+         En este proyecto, class="encabezado-sesion" permite aplicar estilos al
+         contenedor. id="titulo-sesion" identifica el h2 y permite relacionarlo
+         con <section aria-labelledby="titulo-sesion"> para darle un nombre
+         accesible a esa sección. -->
+
+    <!-- DL, DT Y DD
+         <dl> crea una lista de descripciones o parejas de concepto y valor.
+         <dt> contiene el término o nombre del dato.
+         <dd> contiene su descripción o valor.
+
+         En el marcador, "Aciertos" es el dt y el número mostrado es el dd.
+         Se utiliza esta estructura porque expresa mejor la relación entre cada
+         estadística y su valor que una colección de div sin significado. -->
+
+    <!-- FORM, LABEL E INPUT
+         <form> agrupa los controles que pertenecen a un formulario. Al enviarlo
+         genera el evento submit, incluso al pulsar Enter dentro del campo.
+         Podría utilizarse un div y controlar un botón con JavaScript, pero form
+         es la opción semántica adecuada y ofrece mejor comportamiento y
+         accesibilidad para introducir y enviar datos.
+
+         <label> describe qué dato debe escribir el usuario. Su atributo for debe
+         coincidir con el id del control: <label for="alias"> se relaciona con
+         <input id="alias">. Al pulsar el label también se enfoca el campo.
+
+         <input> crea un control para introducir datos. type="text" permite
+         escribir texto; required señala que es obligatorio y maxlength="20"
+         limita el valor a veinte caracteres. Es una etiqueta vacía: no necesita
+         una etiqueta de cierre. -->
+
+    <!-- UL Y LI
+         <ul> crea una lista no ordenada. Se usa cuando el orden de los elementos
+         no representa pasos ni una clasificación y normalmente muestra viñetas.
+         <li> representa cada elemento individual de esa lista.
+
+         En el formulario, ul agrupa los requisitos del alias y cada li contiene
+         una condición. Si el orden fuera importante se utilizaría <ol>. -->
+
+    <!-- THEAD Y TBODY
+         <thead> agrupa la cabecera de una tabla: en este proyecto contiene los
+         nombres "Puesto", "Alias", "Puntos" y "Precisión" mediante th.
+         <tbody> agrupa las filas de datos de la tabla. Aquí empieza vacío porque
+         JavaScript crea e inserta las cinco filas al mostrar la clasificación.
+         Separarlos mejora la estructura semántica y ayuda a interpretar la tabla. -->
+
+    <!-- DIFERENCIA ENTRE DIV Y SECTION
+         <div> es un contenedor genérico sin significado semántico. Se utiliza
+         para agrupar elementos por diseño, distribución o uso desde JavaScript.
+
+         <section> representa una sección temática de la página. Normalmente tiene
+         un título que explica su contenido. El panel de entrenamiento es section
+         porque constituye una parte reconocible y tiene el h2 "Zona de
+         entrenamiento". La distribución interior usa div porque solo organiza
+         visualmente los marcadores y el tablero. -->
+
+    <!-- NOSCRIPT
+         <noscript> contiene información alternativa que el navegador muestra
+         únicamente cuando JavaScript está desactivado o no se puede ejecutar.
+         En este proyecto JavaScript crea las casillas y controla toda la partida;
+         por eso se avisa al usuario de que debe activarlo para usar el tablero. -->
   </body>
 </html>

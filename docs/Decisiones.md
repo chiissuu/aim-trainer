@@ -2,6 +2,12 @@
 
 Este documento recoge elecciones que afectan al funcionamiento, la estructura o la defensa. No registra cada ajuste visual pequeño.
 
+## README final
+
+**Decisión:** organizar la documentación pública en descripción, prueba, tecnologías, archivos, funcionalidades, comprobaciones, uso de IA, preguntas y decisiones, y Autopsia.
+
+**Motivo:** elimina el seguimiento provisional y las repeticiones entre fases, pero conserva los datos necesarios para ejecutar, evaluar y defender el proyecto. Las comprobaciones permanecen resumidas para distinguir las realizadas manualmente de las simuladas por Codex. La Autopsia se conserva exactamente con la redacción entregada por el alumno.
+
 ## Idea del proyecto
 
 **Decisión:** desarrollar un aim trainer.
@@ -31,6 +37,14 @@ Este documento recoge elecciones que afectan al funcionamiento, la estructura o 
 **Decisión:** reducir el tiempo inicial de 60 a 15 segundos.
 
 **Motivo:** facilita probar muchas partidas y encaja mejor con las puntuaciones ficticias actuales.
+
+## Mantener parámetros fijos
+
+**Decisión:** conservar partidas de 15 segundos con seis objetivos y no añadir un formulario de configuración.
+
+**Motivo:** la versión actual ya cumple la misión y mantiene una dificultad adecuada para poder defender el código línea a línea. Permitir distintas duraciones y cantidades de objetivos añadiría validaciones, nuevos estados de interfaz y puntuaciones difíciles de comparar.
+
+**Alternativa descartada:** un botón «Editar parámetros» con valores de 15 a 60 segundos y de 3 a 10 objetivos.
 
 ## Temporizador basado en una hora límite
 
@@ -89,4 +103,14 @@ La pulsación se ignora mientras el usuario escribe en el formulario para evitar
 **Motivo:** mantiene un estilo retro legible con tildes, números y símbolos.
 
 **Alternativas descartadas:** Blazter y Wicked Mouse, porque no mostraban correctamente todos los caracteres necesarios.
+
+## Jerarquía visual de botones y footer
+
+**Decisión:** usar rojo para las acciones principales en modo claro y blanco en modo oscuro. El reinicio mantiene un fondo neutro y un borde destacado para diferenciarlo como acción secundaria.
+
+**Motivo:** conecta los controles con el título, las dianas y los bordes sin hacer que todos los botones tengan la misma importancia.
+
+El panel, el tablero y el footer utilizan bordes de 3 píxeles. Los textos de descripción, estado y pista emplean el color principal y mayor peso. El footer conserva la frase del modo secreto, añade una etiqueta breve y representa la `N` dentro de un recuadro con la tipografía existente.
+
+**Alternativa descartada:** llenar el footer o los espacios laterales con más dianas, porque repetiría elementos ya presentes y restaría atención al tablero.
 
