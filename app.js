@@ -3,13 +3,6 @@
 // ==================================================
 
 // 1.1. Referencias al DOM
-// DOM significa Document Object Model. El navegador transforma el HTML en un
-// árbol de objetos que JavaScript puede consultar y modificar. document
-// representa el documento completo y querySelector(selector) busca el primer
-// elemento que coincide con un selector CSS. Aquí las constantes no guardan
-// una copia del HTML: guardan una referencia al elemento real de la página.
-// Si después se modifica su textContent, hidden, classList, etc., el cambio se
-// refleja en pantalla. querySelector devolvería null si no encontrara el nodo.
 const tablero = document.querySelector("#tablero"); // Busca #tablero y guarda la referencia a ese div.
 const botonIniciar = document.querySelector("#iniciar");
 const pantallaInicio = document.querySelector("#pantalla-inicio");
@@ -29,11 +22,6 @@ const cuerpoClasificacion = document.querySelector("#filas-clasificacion");
 const imagenTitulo = document.querySelector("#imagen-titulo");
 
 // 1.2. Configuración del juego
-// Son valores fijos que definen las reglas y recursos del programa: rivales,
-// dimensiones, objetivos, duración, tecla secreta y rutas de imágenes. Se usa
-// const porque estas referencias no se reasignan durante una partida. En el
-// caso de arrays y objetos, const fija la referencia, pero su contenido podría
-// modificarse; este programa trata rivales como una configuración invariable.
 const rivales = [
   { nombre: "Enrique Pastor", puntos: 35, fallos: 5, esUsuario: false },
   { nombre: "Mario Vaquerizo", puntos: 29, fallos: 3, esUsuario: false },
@@ -51,20 +39,6 @@ const rutaTituloClaro = "assets/img/titulo-aim-trainer.png";
 const rutaTituloOscuro = "assets/img/titulo-aim-trainer-modo-oscuro.png";
 
 // 1.3. Estado de la partida
-// El estado reúne los datos que cambian mientras se ejecuta el juego. Las
-// variables let pueden recibir un valor nuevo: aciertos pasa de 0 a 1, por
-// ejemplo. casillas y objetivosActivos son arrays declarados con const: no se
-// pueden sustituir por otro array, pero sí añadir, quitar o modificar elementos.
-//
-// length, push(), includes(), indexOf(), splice() y sort() no son variables que
-// tengamos que crear: son propiedades y métodos incorporados en los arrays de
-// JavaScript. length es una propiedad, por eso se consulta sin paréntesis.
-//
-// Los elementos del DOM también son objetos proporcionados por el navegador.
-// Por eso ya incluyen propiedades y métodos como hidden, classList, dataset,
-// appendChild(), replaceChildren(), remove() y focus().
-// Es una lista lineal de 24 elementos. CSS Grid coloca visualmente seis
-// casillas por fila, por eso no hace falta utilizar un array de 4 x 6.
 const casillas = [];
 const objetivosActivos = []; // Guarda los índices de las casillas que tienen una bolita.
 
@@ -83,16 +57,8 @@ let aliasMejorPuntuacion = "";
 // ==================================================
 
 // 2.1. Creación del tablero y objetivos
-// Primero se crean numeroDeFilas * numeroDeColumnas casillas vacías. CSS Grid
-// las reparte visualmente en 4 filas y 6 columnas. Cuando comienza la partida,
-// otras funciones eligen casillas libres e insertan dentro los botones-diana.
 
 // 2.1.1. Función crearTablero()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: repite el bucle numeroDeCasillas veces, crea un div por vuelta,
-// le asigna la clase casilla, lo inserta en #tablero y guarda su referencia.
-// Modifica: el DOM de #tablero y el array casillas.
 function crearTablero() {
   for (let indice = 0; indice < numeroDeCasillas; indice++) {
     const casilla = document.createElement("div"); // La casilla es un contenedor; el botón será la bolita.
@@ -103,11 +69,6 @@ function crearTablero() {
 }
 
 // 2.1.2. Función elegirCasillaLibre()
-// Parámetros: ninguno.
-// Retorno: el índice numérico de una casilla libre elegida al azar.
-// Funcionamiento: construye una lista con los índices que no aparecen en
-// objetivosActivos, genera una posición aleatoria y devuelve ese índice libre.
-// Modifica: nada fuera de la función; casillasLibres es un array temporal.
 function elegirCasillaLibre() {
   const casillasLibres = [];
 
@@ -126,11 +87,6 @@ function elegirCasillaLibre() {
 }
 
 // 2.1.3. Función colocarObjetivo(indice)
-// Parámetros: indice, número de la casilla que recibirá la diana.
-// Retorno: el nuevo elemento button, para poder enfocarlo si es necesario.
-// Funcionamiento: crea un botón, lo configura, lo inserta en la casilla indicada
-// y registra esa posición como ocupada.
-// Modifica: el DOM de una casilla y el array objetivosActivos.
 function colocarObjetivo(indice) {
   const objetivo = document.createElement("button"); // Crea una bolita interactiva, todavía fuera de la página.
   objetivo.type = "button";
@@ -147,11 +103,6 @@ function colocarObjetivo(indice) {
 }
 
 // 2.1.4. Función limpiarObjetivos()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: recorre todas las casillas, elimina sus dianas y vacía la lista
-// de posiciones ocupadas sin sustituir el array original.
-// Modifica: el DOM de las casillas y el array objetivosActivos.
 function limpiarObjetivos() {
   for (const casilla of casillas) {
     // replaceChildren() es un método de elementos DOM. Sin argumentos elimina
@@ -166,11 +117,6 @@ function limpiarObjetivos() {
 
 // 2.2. Inicio, reinicio y temporizador
 // 2.2.1. Función actualizarTiempo()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: compara la hora final con la hora actual, actualiza los
-// segundos visibles y termina la partida cuando ya no queda tiempo.
-// Modifica: el texto del marcador de tiempo y, al llegar a cero, el estado final.
 function actualizarTiempo() {
   // Date.now() devuelve los milisegundos transcurridos desde el 1 de enero de
   // 1970 hasta el momento actual. Restarlo a finDePartida da el tiempo pendiente.
@@ -184,11 +130,6 @@ function actualizarTiempo() {
 }
 
 // 2.2.2. Función limpiarResultadoAnterior()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: devuelve formulario, clasificación y pantalla central a su
-// estado inicial antes de comenzar otra partida.
-// Modifica: resultadoPendiente y varios elementos del DOM.
 function limpiarResultadoAnterior() {
   resultadoPendiente = false;
   formularioAlias.reset(); // reset() devuelve los campos a sus valores iniciales del HTML.
@@ -204,11 +145,6 @@ function limpiarResultadoAnterior() {
 }
 
 // 2.2.3. Función prepararNuevaPartida()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: cancela cualquier temporizador anterior, limpia el resultado,
-// reinicia estadísticas y coloca el número configurado de objetivos.
-// Modifica: estado de la partida, marcadores, objetivos y pantalla de resultado.
 function prepararNuevaPartida() {
   // clearInterval() es una función del navegador. Recibe el identificador que
   // devolvió setInterval() y cancela sus futuras repeticiones. Si vale null o ya
@@ -229,12 +165,6 @@ function prepararNuevaPartida() {
 }
 
 // 2.2.4. Función mostrarPartidaActiva(inicioTeniaFoco)
-// Parámetros: inicioTeniaFoco, booleano que indica si el botón de inicio o de
-// reinicio era el elemento que tenía el foco antes de cambiar la pantalla.
-// Retorno: ninguno.
-// Funcionamiento: oculta la capa inicial, muestra el reinicio, calcula la hora
-// final, pone en marcha el intervalo y conserva una navegación cómoda por teclado.
-// Modifica: controles visibles, finDePartida, intervalo, foco y mensaje de estado.
 function mostrarPartidaActiva(inicioTeniaFoco) {
   botonIniciar.disabled = true;
   pantallaInicio.hidden = true; // Oculta solo el mensaje y el botón superpuestos, no el tablero.
@@ -255,11 +185,6 @@ function mostrarPartidaActiva(inicioTeniaFoco) {
 }
 
 // 2.2.5. Función iniciarEntrenamiento()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: impide un segundo inicio simultáneo, recuerda si uno de los
-// botones de control tenía el foco, prepara los datos y muestra la partida.
-// Modifica: indirectamente todo el estado y la interfaz de una nueva partida.
 function iniciarEntrenamiento() {
   if (entrenamientoActivo) return;
 
@@ -273,11 +198,6 @@ function iniciarEntrenamiento() {
 }
 
 // 2.2.6. Función reiniciarPartida()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: solo actúa durante una partida, la marca momentáneamente como
-// inactiva y reutiliza iniciarEntrenamiento() para reconstruirla desde cero.
-// Modifica: indirectamente temporizador, estadísticas, objetivos y controles.
 function reiniciarPartida() {
   if (!entrenamientoActivo) return;
   entrenamientoActivo = false;
@@ -286,11 +206,6 @@ function reiniciarPartida() {
 
 // 2.3. Interacción: aciertos, fallos y estadísticas
 // 2.3.1. Función calcularPrecision(cantidadAciertos, cantidadFallos)
-// Parámetros: dos números con los aciertos y fallos que se quieren calcular.
-// Retorno: un número entero entre 0 y 100.
-// Funcionamiento: divide los aciertos entre todos los intentos y transforma el
-// resultado en porcentaje; devuelve 0 si todavía no existe ningún intento.
-// Modifica: nada; solo calcula y devuelve un valor.
 function calcularPrecision(cantidadAciertos, cantidadFallos) {
   const intentos = cantidadAciertos + cantidadFallos;
 
@@ -302,11 +217,6 @@ function calcularPrecision(cantidadAciertos, cantidadFallos) {
 }
 
 // 2.3.2. Función actualizarEstadisticas()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: calcula la precisión del estado actual y escribe aciertos,
-// fallos y porcentaje en sus marcadores.
-// Modifica: el textContent de los tres elementos visibles del marcador.
 function actualizarEstadisticas() {
   const precision = calcularPrecision(aciertos, fallos);
 
@@ -316,21 +226,12 @@ function actualizarEstadisticas() {
 }
 
 // 2.3.3. Función registrarFallo()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: incrementa fallos y actualiza los marcadores.
-// Modifica: la variable fallos y el DOM de las estadísticas.
 function registrarFallo() {
   fallos++;
   actualizarEstadisticas();
 }
 
 // 2.3.4. Función registrarAcierto(objetivo)
-// Parámetros: objetivo, botón-diana que acaba de activarse.
-// Retorno: ninguno.
-// Funcionamiento: recupera su posición, elige otra libre, elimina la diana
-// acertada, crea su sustituta, suma el punto y conserva el foco si era necesario.
-// Modifica: objetivosActivos, DOM del tablero, aciertos, estadísticas y foco.
 function registrarAcierto(objetivo) {
   // dataset siempre entrega texto. Number() transforma "7" en el número 7.
   const indice = Number(objetivo.dataset.indice);
@@ -354,11 +255,6 @@ function registrarAcierto(objetivo) {
 }
 
 // 2.3.5. Función manejarClicTablero(evento)
-// Parámetros: evento, objeto creado por el navegador con información del clic.
-// Retorno: ninguno.
-// Funcionamiento: descarta clics fuera de una partida o fuera de tiempo, busca
-// si se pulsó una diana y registra un acierto o un fallo según el resultado.
-// Modifica: estado y DOM mediante registrarAcierto(), registrarFallo() o el final.
 function manejarClicTablero(evento) {
   if (!entrenamientoActivo) return;
 
@@ -382,11 +278,6 @@ function manejarClicTablero(evento) {
 }
 
 // 2.3.6. Función evitarActivacionMantenida(evento)
-// Parámetros: evento de teclado enviado por el navegador.
-// Retorno: ninguno.
-// Funcionamiento: detecta la repetición automática de Enter o Espacio sobre una
-// diana y cancela solo esas repeticiones; las pulsaciones individuales funcionan.
-// Modifica: el comportamiento predeterminado del evento cuando se cumplen las condiciones.
 function evitarActivacionMantenida(evento) {
   if (!evento.repeat) return;
   if (evento.key !== "Enter" && evento.key !== " ") return;
@@ -398,11 +289,6 @@ function evitarActivacionMantenida(evento) {
 
 // 2.4. Final de partida
 // 2.4.1. Función finalizarPartida()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: detiene el juego y el temporizador, elimina las dianas, muestra
-// la puntuación y el formulario, oculta el reinicio y recoloca el foco si procede.
-// Modifica: estado de la partida, intervalo, tablero, pantalla final y foco.
 function finalizarPartida() {
   if (!entrenamientoActivo) return;
 
@@ -432,11 +318,6 @@ function finalizarPartida() {
 
 // 2.5. Formulario y clasificación
 // 2.5.1. Función validarAlias()
-// Parámetros: ninguno; lee directamente el valor del input #alias.
-// Retorno: el nombre limpio si es válido o null si no cumple los requisitos.
-// Funcionamiento: elimina espacios exteriores, comprueba la longitud y muestra
-// el estado de error accesible cuando el alias no es válido.
-// Modifica: clases, atributo aria-invalid y foco del campo de alias.
 function validarAlias() {
   // value contiene el texto del input. trim() devuelve otra cadena sin espacios
   // al principio ni al final; no cambia directamente el contenido visible.
@@ -455,11 +336,6 @@ function validarAlias() {
 }
 
 // 2.5.2. Función actualizarMejorPuntuacion(nombre)
-// Parámetros: nombre, alias válido enviado por el usuario.
-// Retorno: ninguno.
-// Funcionamiento: compara la partida con la mejor marca guardada; la sustituye
-// si tiene más puntos o los mismos puntos con una precisión superior.
-// Modifica: mejorPuntuacion, mejorPrecision y aliasMejorPuntuacion si hay mejora.
 function actualizarMejorPuntuacion(nombre) {
   const precisionActual = calcularPrecision(aciertos, fallos);
   let mejoraLaMarca = false;
@@ -478,11 +354,6 @@ function actualizarMejorPuntuacion(nombre) {
 }
 
 // 2.5.3. Función crearParticipantesOrdenados()
-// Parámetros: ninguno; utiliza rivales y la mejor marca almacenada.
-// Retorno: un nuevo array con los cinco participantes ya ordenados.
-// Funcionamiento: crea el resultado del usuario, copia los rivales añadiendo su
-// precisión y orden, une todos los resultados y aplica los tres desempates.
-// Modifica: nada fuera de la función; trabaja con un array nuevo.
 function crearParticipantesOrdenados() {
   const mejorResultado = {
     nombre: aliasMejorPuntuacion,
@@ -523,10 +394,6 @@ function crearParticipantesOrdenados() {
 }
 
 // 2.5.4. Función crearFilaClasificacion(participante, indice)
-// Parámetros: participante, objeto con sus datos; indice, posición en la tabla.
-// Retorno: el elemento <tr> completo, todavía sin insertar en <tbody>.
-// Funcionamiento: crea las cuatro celdas, escribe sus datos y destaca al usuario.
-// Modifica: solo los nodos DOM nuevos creados dentro de la función.
 function crearFilaClasificacion(participante, indice) {
   const fila = document.createElement("tr");
   const puesto = document.createElement("td");
@@ -556,10 +423,6 @@ function crearFilaClasificacion(participante, indice) {
 }
 
 // 2.5.5. Función rellenarClasificacion(participantes)
-// Parámetros: participantes, array ya ordenado que se quiere representar.
-// Retorno: ninguno.
-// Funcionamiento: vacía el tbody, crea una fila por participante y la inserta.
-// Modifica: el contenido DOM de #filas-clasificacion.
 function rellenarClasificacion(participantes) {
   cuerpoClasificacion.replaceChildren();
 
@@ -570,11 +433,6 @@ function rellenarClasificacion(participantes) {
 }
 
 // 2.5.6. Función mostrarPantallaClasificacion()
-// Parámetros: ninguno.
-// Retorno: ninguno.
-// Funcionamiento: oculta el formulario, muestra tabla y botón, lleva el foco al
-// título y coloca el desplazamiento interno del resultado en su parte superior.
-// Modifica: resultadoPendiente, visibilidad, foco, scroll y mensaje de estado.
 function mostrarPantallaClasificacion() {
   resultadoPendiente = false;
   formularioAlias.hidden = true;
@@ -586,11 +444,6 @@ function mostrarPantallaClasificacion() {
 }
 
 // 2.5.7. Función mostrarClasificacion(evento)
-// Parámetros: evento submit generado al enviar el formulario.
-// Retorno: ninguno.
-// Funcionamiento: evita la recarga normal, comprueba el estado y el alias,
-// actualiza la mejor marca, genera los participantes y muestra la tabla.
-// Modifica: indirectamente mejor marca, filas de clasificación y pantalla visible.
 function mostrarClasificacion(evento) {
   // Los formularios intentan enviar datos y recargar la página por defecto.
   // preventDefault() cancela esa acción para gestionar el envío con JavaScript.
@@ -608,11 +461,6 @@ function mostrarClasificacion(evento) {
 
 // 2.6. Modo oscuro
 // 2.6.1. Función alternarModoOscuro(evento)
-// Parámetros: evento de teclado creado por el navegador.
-// Retorno: ninguno.
-// Funcionamiento: ignora la escritura en el alias y cualquier tecla distinta de
-// N; si coincide, alterna la clase del body y cambia la imagen del título.
-// Modifica: class del body y atributo src de #imagen-titulo.
 function alternarModoOscuro(evento) {
   // Escribir la letra secreta dentro del campo de alias no cambia el tema.
   if (evento.target === campoAlias) return;

@@ -96,9 +96,9 @@ Texto literal redactado por el alumno.
 - [ ] Distingue pruebas manuales, simuladas y pendientes.
 - [ ] Declara con precisión el uso de IA y la aportación propia.
 - [ ] Conserva la Autopsia escrita por el alumno sin cambios.
-- [ ] No contiene instrucciones dirigidas al evaluador ni frases para pedir nota.
+- [ ] No contiene instrucciones ajenas a la documentación del proyecto.
 - [ ] Supera `git diff --check` y se visualiza correctamente en GitHub.
 
 ## Aplicación en Aim Trainer
 
-El README final de M1 adoptó esta estructura y eliminó «Estado actual», «Próximos pasos» y un ejemplo aislado de prompt. Las comprobaciones se conservaron resumidas porque aportan evidencia. Ricardo v3.1 concedió la puntuación completa a los cuatro criterios documentales del README.
+El README final de M1 adoptó esta estructura y eliminó «Estado actual», «Próximos pasos» y un ejemplo aislado de prompt. Las comprobaciones se conservaron resumidas porque aportan información sobre el trabajo realizado.

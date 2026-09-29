@@ -29,14 +29,12 @@ No quedan tareas de desarrollo. El repositorio está preparado para el commit y 
 
 ## Revisión final de la entrega
 
-- [x] Adjuntar o activar la herramienta de evaluación utilizada por el curso.
-- [x] Revisar el proyecto con la rúbrica completa de 100 puntos.
+- [x] Revisar el proyecto con los requisitos de la misión.
 - [x] Confirmar que el README contiene «Uso de IA» y «Autopsia» actualizados.
 - [x] Confirmar que el repositorio es público y no contiene archivos temporales.
 - [x] Comprobar que los commits representan avances comprensibles.
 - [x] Ejecutar la revisión manual principal sin errores propios del proyecto en consola.
 - [x] Actualizar [[Contexto]], [[Decisiones]] y esta lista con el estado final.
-- [x] Ejecutar Ricardo sobre la revisión publicada y registrar el resultado.
 
 ## Bloqueos
 
@@ -56,4 +54,6 @@ No hay bloqueos actuales.
 - [x] Cierre del alcance funcional: se mantienen 15 segundos y seis objetivos.
 - [x] Botones, bordes, textos destacados y footer ajustados en ambos modos.
 - [x] Guías de estudio añadidas en HTML, CSS y JavaScript para repasar semántica, selectores, DOM, estado y funciones.
+- [x] Guías extensas trasladadas a [[Estudio]] y comentarios del código reducidos a explicaciones breves.
+- [x] README actualizado para identificar `docs/` como documentación interna de Obsidian.
 

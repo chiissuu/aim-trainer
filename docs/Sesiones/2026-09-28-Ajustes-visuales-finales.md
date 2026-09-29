@@ -30,4 +30,4 @@ El mayor peso visual se aplica con `font-weight: 700` en CSS. No se añadieron e
 
 ## Pendiente
 
-El alumno debe realizar la valoración visual definitiva antes de utilizar la herramienta evaluadora del curso.
+El alumno debe realizar la valoración visual definitiva antes de entregar el proyecto.

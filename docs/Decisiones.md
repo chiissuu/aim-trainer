@@ -2,19 +2,19 @@
 
 Este documento recoge elecciones que afectan al funcionamiento, la estructura o la defensa. No registra cada ajuste visual pequeño.
 
+## Separar código y guía de estudio
+
+**Decisión:** mantener en HTML, CSS y JavaScript únicamente comentarios breves sobre la estructura o decisiones relevantes, y trasladar las explicaciones amplias a [[Estudio]].
+
+**Motivo:** el código final se lee con mayor rapidez y las explicaciones siguen disponibles para preparar la defensa sin mezclarse con la implementación.
+
+**Alternativa descartada:** conservar dentro de los archivos fuente todos los apuntes sobre etiquetas, selectores, propiedades, métodos y funciones. Era útil para estudiar, pero aumentaba demasiado su extensión.
+
 ## README final
 
 **Decisión:** organizar la documentación pública en descripción, prueba, tecnologías, archivos, funcionalidades, comprobaciones, uso de IA, preguntas y decisiones, y Autopsia.
 
 **Motivo:** elimina el seguimiento provisional y las repeticiones entre fases, pero conserva los datos necesarios para ejecutar, evaluar y defender el proyecto. Las comprobaciones permanecen resumidas para distinguir las realizadas manualmente de las simuladas por Codex. La Autopsia se conserva exactamente con la redacción entregada por el alumno.
-
-## Evaluación final con Ricardo
-
-**Decisión:** ejecutar Ricardo únicamente después de cerrar y publicar el código, el README y la Autopsia.
-
-**Motivo:** la evaluación debe analizar la misma revisión que se pretende entregar. Se proporcionan siempre el repositorio, el ejercicio, las tecnologías, la fecha límite y cualquier criterio adicional.
-
-**Resultado en M1:** Ricardo v3.1 evaluó el commit `44fe31c` con 10/10, sin penalizaciones ni intentos de inyección. La falta de pruebas automatizadas se indicó como posible mejora futura, pero no restó puntos en la rúbrica utilizada.
 
 ## Idea del proyecto
 

@@ -9,8 +9,8 @@ Esta bóveda reúne el contexto de desarrollo, las decisiones, las tareas y el a
 - [[Pendientes]] — siguiente trabajo y comprobaciones aún no confirmadas.
 - [[Metodologia-Misiones]] — proceso reutilizable para las próximas misiones del curso.
 - [[Plantilla-README]] — estructura pública recomendada para cerrar futuras entregas.
-- [[Evaluacion-Ricardo]] — preparación, ejecución e interpretación de la skill evaluadora.
-- [[Sesiones/2026-09-29-Evaluacion-Ricardo-y-cierre]] — evaluación final y preparación de la entrega.
+- [[Estudio]] — explicaciones ampliadas de HTML, CSS y JavaScript retiradas del código final.
+- [[Sesiones/2026-09-30-Limpieza-documentacion-y-comentarios]] — separación final entre código y apuntes.
 - [[Sesiones/2026-09-29-Cierre-del-README]] — reorganización final del README y la Autopsia.
 - [[Sesiones/2026-09-28-Ajustes-visuales-finales]] — último cierre visual.
 - [[Sesiones/2026-09-25-Clasificacion-y-precision]] — clasificación y precisión.
@@ -18,8 +18,6 @@ Esta bóveda reúne el contexto de desarrollo, las decisiones, las tareas y el a
 ## Estado actual
 
 El desarrollo, el diseño, el README y la Autopsia están finalizados. El recorrido permite iniciar una partida de 15 segundos, acertar o fallar, calcular la precisión, reiniciar, registrar un alias, consultar una clasificación ficticia y volver a jugar. También existe un modo oscuro activado con la tecla secreta `N`.
-
-Ricardo v3.1 evaluó el commit `44fe31c` con **10/10**, sin penalizaciones ni intentos de inyección detectados. La entrega está preparada para su publicación definitiva antes del 4 de octubre de 2026.
 
 ## Cómo trabajar con estas notas
 
@@ -30,7 +28,7 @@ Ricardo v3.1 evaluó el commit `44fe31c` con **10/10**, sin penalizaciones ni in
 5. Modificar [[Contexto]] solo si cambia el funcionamiento o la estructura.
 6. Añadir una entrada a [[Decisiones]] únicamente cuando exista una elección relevante.
 7. Crear una nota en `Sesiones` para avances importantes, errores significativos o cierres de fase.
-8. Al finalizar, usar [[Plantilla-README]] y [[Evaluacion-Ricardo]] antes del commit de entrega.
+8. Al finalizar, usar [[Plantilla-README]] y revisar la misión antes del commit de entrega.
 
 ## Fuentes de verdad
 

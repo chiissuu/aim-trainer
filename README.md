@@ -38,7 +38,7 @@ No se utilizan frameworks, librerías externas, servicios web ni `localStorage`.
 | `app.js` | Estado, creación de casillas, eventos y reglas del juego. |
 | `SpaceMono-Regular.ttf` | Fuente local utilizada en la interfaz. |
 | `assets/img/` | Títulos, dianas y favicon de los modos claro y oscuro. |
-| `docs/` | Contexto, decisiones, seguimiento y notas de aprendizaje para Obsidian. |
+| `docs/` | Documentación interna de aprendizaje y seguimiento utilizada con Obsidian. |
 | `AGENTS.md` | Instrucciones de trabajo para los agentes utilizados en el proyecto. |
 | `.gitignore` | Exclusión de configuraciones locales y archivos temporales. |
 
@@ -83,7 +83,7 @@ Para esta primera misión he empleado la IA generativa de ChatGPT, a través de 
 
 El trabajo se dividió en fases pequeñas. Antes de avanzar, revisé el resultado, planteé dudas sobre los elementos que no comprendía y pedí explicaciones de las decisiones técnicas. Yo ejecuté los comandos de Git y cada commit representó un avance funcional del proyecto.
 
-El contexto, las decisiones y las tareas se documentaron en archivos Markdown dentro de `docs/`. Esa carpeta se abrió como una bóveda de Obsidian para poder consultar el aprendizaje y recuperar la metodología en futuras misiones.
+El contexto, las decisiones y las tareas se documentaron en archivos Markdown dentro de `docs/`. Esa carpeta se abrió como una bóveda de Obsidian para poder consultar el aprendizaje y recuperar la metodología en futuras misiones. Es documentación interna y no forma parte del funcionamiento de la aplicación ni pretende acreditar su calidad.
 
 ### Preguntas y decisiones trabajadas hasta el final del desarrollo
 

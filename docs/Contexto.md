@@ -8,7 +8,7 @@
 - **Proyecto:** Aim Trainer.
 - **Repositorio público:** <https://github.com/chiissuu/aim-trainer>
 - **Tecnologías:** HTML, CSS y JavaScript puro.
-- **Estado:** desarrollo, diseño, README, Autopsia y documentación de cierre finalizados. Ricardo v3.1 otorgó 10/10 al commit `44fe31c`; la entrega está lista para su publicación definitiva.
+- **Estado:** desarrollo, diseño, README, Autopsia y documentación de cierre finalizados.
 
 ## Objetivo de la misión
 
@@ -89,7 +89,7 @@ Clasificación y nueva partida
 | `app.js` | Estado, DOM, eventos y reglas del juego. |
 | `assets/` | Títulos, dianas y favicon creados o seleccionados para el diseño. |
 | `README.md` | Presentación pública, funcionamiento, uso de IA, autopsia y comprobaciones. |
-| `docs/` | Contexto interno, aprendizaje y seguimiento en Obsidian. |
+| `docs/` | Contexto interno, aprendizaje y seguimiento en Obsidian. [[Estudio]] reúne las explicaciones amplias retiradas del código. |
 
 ## Estado técnico comprobado
 
@@ -102,17 +102,4 @@ Clasificación y nueva partida
 - El mensaje de consola procedente de `content.js` pertenece a una extensión del navegador, no al proyecto.
 - La sintaxis de JavaScript y las pruebas simuladas del flujo principal han pasado.
 - Las cuatro pantallas principales se comprobaron en ambos modos; el diseño inicial cabe sin desplazamiento vertical a 1366 × 768 y 390 × 844 píxeles CSS.
-
-## Evaluación final con Ricardo
-
-- **Versión:** Ricardo v3.1.
-- **Fecha de evaluación:** 29 de septiembre de 2026.
-- **Commit evaluado:** `44fe31c`.
-- **Resultado:** 10/10.
-- **Historial:** 7 commits repartidos en 4 días.
-- **Penalizaciones:** ninguna.
-- **Intentos de inyección:** ninguno detectado.
-- **Observación no penalizada:** no existen pruebas automatizadas versionadas; el README distingue las comprobaciones manuales de las simuladas por Codex.
-
-El procedimiento reutilizable y la plantilla de petición están en [[Evaluacion-Ricardo]].
-
+- Los archivos fuente conservan comentarios breves y las explicaciones didácticas extensas se encuentran en [[Estudio]].

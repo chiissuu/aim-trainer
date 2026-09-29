@@ -1,34 +1,4 @@
 /* ==================================================
-   GUÍA RÁPIDA PARA LEER CSS
-   ==================================================
-
-   selector {
-     propiedad: valor;
-   }
-
-   .nombre selecciona una clase reutilizable.
-   #nombre selecciona un id único.
-   * selecciona todos los elementos.
-   Una etiqueta sin prefijo, como button, selecciona todas las
-   etiquetas de ese tipo.
-   :nombre introduce una pseudoclase, como :focus-visible.
-   Un espacio selecciona descendientes: .panel p.
-   > selecciona hijos directos: .marcador > div. No significa
-   "mayor que"; exige que el div esté justo dentro de .marcador.
-   [atributo] selecciona elementos que tienen ese atributo: [hidden].
-   Una coma permite aplicar el mismo bloque a varios selectores.
-   @media agrupa reglas que se aplican bajo una condición.
-
-   La cascada decide qué regla gana cuando varias afectan al mismo
-   elemento. Normalmente influyen la especificidad, el orden y la
-   herencia. Una regla posterior puede sustituir una regla anterior.
-
-   var(--nombre) lee una propiedad personalizada, conocida como
-   variable CSS. Las variables de color se definen en :root y el
-   modo oscuro sustituye sus valores desde body.modo-oscuro.
-   ================================================== */
-
-/* ==================================================
    1. COLORES Y BASE GENERAL
    ================================================== */
 
@@ -42,22 +12,9 @@
   font-display: swap;
 }
 
-/* :root es una pseudoclase que representa el elemento raíz del documento,
-   que en una página HTML es <html>. No se escribe ni se invoca desde el
-   body: el navegador lo selecciona automáticamente. Las propiedades que
-   se heredan o utilizan var() quedan disponibles para toda la página. */
+/* Variables compartidas por toda la página y paleta clara predeterminada. */
 :root {
   font-family: "Space Mono", monospace; /* Se hereda desde <html> hacia la mayoría de descendientes. */
-
-  /* Paleta clara utilizada por defecto.
-     Los nombres que empiezan por -- son propiedades personalizadas. Por sí
-     solas no cambian nada: guardan un valor que después se lee, por ejemplo,
-     con color: var(--color-texto).
-
-     Esta técnica es habitual y profesional. Permite cambiar un color en un
-     solo lugar, mantiene una paleta coherente y facilita crear temas. Escribir
-     el hexadecimal directamente también es válido, pero obligaría a repetirlo
-     y sería más fácil dejar colores diferentes por error. */
   --color-fondo: #f3f5ef;
   --color-superficie: #ffffff;
   --color-superficie-suave: #eef1eb;
@@ -75,16 +32,7 @@
   --color-foco: #183a33;
 }
 
-/* body.modo-oscuro selecciona el elemento <body> cuando ese mismo elemento
-   tiene la clase "modo-oscuro". No significa "elementos modo-oscuro dentro
-   de body": para eso habría un espacio, body .modo-oscuro.
-
-   JavaScript ejecuta document.body.classList.toggle("modo-oscuro") al pulsar
-   N. toggle añade la clase si no existe y la elimina si ya existe. Al aparecer
-   la clase, estas variables sustituyen a las de :root para body y todos sus
-   descendientes. Las reglas que usan var() reciben los nuevos colores sin
-   tener que reescribir cada selector. Al quitar la clase vuelven a heredarse
-   los valores claros definidos en :root. */
+/* JavaScript alterna esta clase para sustituir la paleta sin repetir selectores. */
 body.modo-oscuro {
   --color-fondo: #0c0e0f;
   --color-superficie: #171a1c;
@@ -103,10 +51,8 @@ body.modo-oscuro {
   --color-foco: #ffffff;
 }
 
-/* * es el selector universal: selecciona todos los elementos de la página. */
 * {
-  box-sizing: border-box; /* width y height incluyen el padding y el borde.
-                            Un bloque de 100px seguirá ocupando 100px en total. */
+  box-sizing: border-box;
 }
 
 html,
@@ -116,13 +62,11 @@ body {
 }
 
 body {
-  height: 100dvh; /* Alto visible actual del navegador. La d significa dynamic
-                     y se adapta a las barras del navegador móvil. */
+  height: 100dvh;
   margin: 0;
   overflow: hidden;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto; /* La zona principal usa el espacio
-                                             libre; auto reserva la altura del footer. */
+  grid-template-rows: minmax(0, 1fr) auto; /* Reserva una fila para el footer. */
   color: var(--color-texto);
   background-color: var(--color-fondo);
   transition: color 180ms ease, background-color 180ms ease;
@@ -134,8 +78,7 @@ body {
 
 .entrenador {
   width: 1000px;
-  max-width: calc(100% - 32px); /* calc() resta 32px al ancho disponible,
-                                   dejando 16px libres a cada lado. */
+  max-width: calc(100% - 32px); /* Deja 16px libres a cada lado. */
   min-height: 0;
   margin: 0 auto; /* 0 arriba y abajo; auto reparte el espacio lateral y centra. */
   padding: 12px 0 8px; /* 12px arriba, 0 en los laterales y 8px abajo. */
@@ -172,8 +115,7 @@ body {
   background-size: contain;
 }
 
-/* Aquí sí existe un espacio: selecciona .diana-decorativa cuando está dentro
-   de un body que tiene la clase modo-oscuro. CSS sustituye su imagen. */
+/* Sustituye la imagen decorativa cuando el modo oscuro está activo. */
 body.modo-oscuro .diana-decorativa {
   background-image: url("assets/img/diana-modo-oscuro.png");
 }
@@ -231,8 +173,7 @@ h2 {
 /* Tres columnas: marcador izquierdo, tablero y marcador derecho. */
 .distribucion-juego {
   display: grid;
-  grid-template-columns: 150px auto 150px; /* Marcador de 150px, tablero con
-                                              ancho automático y otro marcador. */
+  grid-template-columns: 150px auto 150px; /* Marcador, tablero y marcador. */
   align-items: center;
   justify-content: center;
   gap: 16px;
@@ -251,8 +192,6 @@ h2 {
   margin: 0;
 }
 
-/* > significa "hijo directo". Esta regla afecta solo a los div colocados
-   inmediatamente dentro de .marcador, no a cualquier div más profundo. */
 .marcador > div {
   min-height: 96px;
   padding: 14px;
@@ -274,8 +213,7 @@ dd {
   margin: 4px 0 0; /* 4px arriba, 0 en los laterales y 0 abajo. */
   font-size: 1.8rem;
   font-weight: 700;
-  font-variant-numeric: tabular-nums; /* Todos los números ocupan el mismo ancho
-                                        y el contador no produce saltos visuales. */
+  font-variant-numeric: tabular-nums; /* Evita saltos visuales en los contadores. */
 }
 
 .unidad {
@@ -301,8 +239,7 @@ dd {
 
 .tablero {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* Crea seis columnas iguales; cada fr
-                                           representa una parte del espacio. */
+  grid-template-columns: repeat(6, 1fr); /* Seis columnas iguales. */
   grid-template-rows: repeat(4, 1fr); /* Crea cuatro filas del mismo tamaño. */
   gap: 8px;
   width: 100%;
@@ -331,14 +268,12 @@ dd {
   cursor: pointer;
 }
 
-/* El espacio vuelve a indicar descendencia: todos los .objetivo situados dentro
-   de body.modo-oscuro utilizan la imagen alternativa. */
+/* Los objetivos usan su imagen alternativa en modo oscuro. */
 body.modo-oscuro .objetivo {
   background-image: url("assets/img/diana-modo-oscuro.png");
 }
 
-/* La coma agrupa cinco selectores. :focus-visible se activa cuando el control
-   recibe un foco que debe mostrarse, normalmente al navegar con el teclado. */
+/* Foco visible común para los controles interactivos. */
 .objetivo:focus-visible,
 #iniciar:focus-visible,
 #reiniciar:focus-visible,
@@ -354,8 +289,7 @@ body.modo-oscuro .objetivo {
 
 .pantalla-inicio {
   position: absolute;
-  inset: 0; /* Equivale a top, right, bottom y left con valor 0;
-               la capa cubre por completo su contenedor posicionado. */
+  inset: 0; /* Cubre por completo el contenedor posicionado. */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -370,9 +304,6 @@ body.modo-oscuro .objetivo {
   line-height: 1.35;
 }
 
-/* [hidden] es un selector de atributo: selecciona .pantalla-inicio solamente
-   cuando su HTML contiene el atributo hidden. JavaScript cambia la propiedad
-   elemento.hidden entre true y false, lo que añade o retira ese estado. */
 .pantalla-inicio[hidden] {
   display: none;
 }
@@ -384,8 +315,6 @@ body.modo-oscuro .objetivo {
   overflow-y: auto;
 }
 
-/* Selecciona todos los hijos directos (*) de una pantalla que tiene a la vez
-   las clases pantalla-inicio y resultado. */
 .pantalla-inicio.resultado > * {
   flex-shrink: 0;
 }
@@ -393,8 +322,7 @@ body.modo-oscuro .objetivo {
 .formulario-alias {
   display: grid;
   gap: 8px;
-  width: min(100%, 320px); /* min() usa el valor menor: 320px si caben o
-                              el 100% cuando el contenedor es más estrecho. */
+  width: min(100%, 320px);
   text-align: left;
 }
 
@@ -455,8 +383,7 @@ button {
   cursor: not-allowed;
 }
 
-/* :hover se activa al pasar el puntero. :not(:disabled) impide aplicar ese
-   efecto al botón de inicio mientras esté deshabilitado. */
+/* No aplica el efecto hover al botón de inicio deshabilitado. */
 #iniciar:hover:not(:disabled),
 #ver-clasificacion:hover {
   background-color: var(--color-boton-hover);
@@ -484,8 +411,7 @@ button {
   width: 100%;
   margin: 7px 0; /* 7px arriba y abajo; 0 en los laterales. */
   border-collapse: collapse;
-  table-layout: fixed; /* Reparte el ancho por las columnas definidas sin
-                          recalcularlo según la longitud de cada texto. */
+  table-layout: fixed;
   font-size: 0.82rem;
 }
 
@@ -500,8 +426,6 @@ button {
   overflow-wrap: anywhere; /* Permite partir una palabra larga para que no desborde. */
 }
 
-/* :nth-child(2) selecciona el th que ocupa la segunda posición de cada fila
-   de cabecera; en esta tabla corresponde a la columna Alias. */
 .clasificacion th:nth-child(2) {
   width: 40%;
 }
@@ -511,10 +435,7 @@ button {
   font-weight: 700;
 }
 
-/* La coma aplica la misma regla a tres elementos. [hidden] no es una clase:
-   comprueba la presencia del atributo HTML hidden. Aunque los navegadores ya
-   suelen ocultarlo, esta regla deja el comportamiento explícito y evita que
-   otras reglas display del proyecto lo sobrescriban. */
+/* Garantiza que otros display del proyecto no anulen el estado hidden. */
 #formulario-alias[hidden],
 #clasificacion[hidden],
 #iniciar[hidden] {
@@ -622,21 +543,9 @@ noscript {
 
 /* ==================================================
    9. AJUSTES PARA VENTANAS BAJAS
-   RESPONSIVE significa que el diseño se adapta al espacio disponible.
-
-   CASO 1: las reglas anteriores son el diseño normal y se aplican siempre.
-   CASO 2: este @media sustituye algunos valores si la ventana mide 760px
-           de alto o menos y más de 700px de ancho.
-   CASO 3: el siguiente @media reorganiza la página cuando el ancho es de
-           700px o menos.
-
-   No se crean tres páginas. El navegador evalúa las condiciones y, por la
-   cascada, las reglas posteriores sustituyen solo las propiedades repetidas.
-   Las propiedades que no se repiten conservan su valor normal.
    ================================================== */
 
-/* and exige que se cumplan las dos condiciones a la vez: ventana baja y
-   suficientemente ancha para mantener las tres columnas de escritorio. */
+/* Compacta el diseño cuando la ventana es baja pero conserva las tres columnas. */
 @media (max-height: 760px) and (min-width: 701px) {
   .entrenador {
     padding: 6px 0;
@@ -648,8 +557,7 @@ noscript {
   }
 
   .titulo-juego {
-    width: min(55vw, 380px); /* Compara el 55% del ancho visible con 380px
-                                y utiliza el valor menor. */
+    width: min(55vw, 380px);
   }
 
   .descripcion {
@@ -681,9 +589,6 @@ noscript {
 
 /* ==================================================
    10. PANTALLAS ESTRECHAS
-   @media (max-width: 700px) se activa cuando la ventana mide 700px de
-   ancho o menos. Aquí se permite desplazamiento y se reorganiza el Grid
-   para no ocultar contenido esencial.
    ================================================== */
 
 @media (max-width: 700px) {
@@ -694,8 +599,7 @@ noscript {
   }
 
   .entrenador {
-    width: min(calc(100% - 24px), 560px); /* calc() deja 12px a cada lado y
-                                             min() limita el resultado a 560px. */
+    width: min(calc(100% - 24px), 560px);
     padding: 14px 0;
     justify-content: flex-start;
   }
@@ -714,8 +618,7 @@ noscript {
   }
 
   .distribucion-juego {
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Dos columnas iguales
-                                                         que pueden encogerse sin desbordar. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
 
@@ -740,8 +643,7 @@ noscript {
   }
 
   .zona-juego {
-    grid-column: 1 / -1; /* Desde la primera hasta la última línea del Grid;
-                            el tablero abarca todas las columnas. */
+    grid-column: 1 / -1; /* El tablero abarca las dos columnas. */
     grid-row: 2; /* Segunda fila, debajo de los dos marcadores. */
     width: 100%;
     max-width: 600px;

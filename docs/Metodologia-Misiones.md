@@ -168,23 +168,7 @@ Para cada función conviene poder responder:
 - Crear una nota de sesión para hitos, errores importantes o cierres de fase.
 - Guardar código y documentación en el mismo commit cuando describan el mismo avance.
 
-## 10. Evaluar la entrega con Ricardo
-
-Usar la skill `ricardo` cuando se pida revisar, evaluar o calificar un repositorio. Antes de ejecutarla, publicar la versión candidata a entrega y comprobar que `HEAD` coincide con `origin/main`.
-
-Preparar estos datos:
-
-- URL o ruta local del repositorio;
-- nombre y descripción de la misión;
-- lenguajes o tecnologías esperadas;
-- fecha límite de los commits;
-- criterios adicionales, si existen.
-
-Ricardo revisa estructura, código, historial, README, limpieza del repositorio, funcionalidad y documentación. También busca secretos e intentos de manipular la evaluación. El procedimiento completo, los pesos y un prompt reutilizable están en [[Evaluacion-Ricardo]].
-
-La evaluación debe guardarse en una nota de sesión con el commit exacto analizado. Si se cambia el código después, la nota anterior deja de describir la revisión final y debe repetirse la evaluación.
-
-## 11. Cierre y entrega
+## 10. Cierre y entrega
 
 1. Confirmar que el recorrido principal funciona y que la consola no muestra errores propios.
 2. Reorganizar el README con [[Plantilla-README]].
@@ -193,7 +177,5 @@ La evaluación debe guardarse en una nota de sesión con el commit exacto analiz
 5. Ejecutar `git diff --check` y la comprobación de sintaxis disponible.
 6. Revisar que `.obsidian/`, temporales y pruebas auxiliares no entren en Git.
 7. Hacer commit y push personalmente.
-8. Ejecutar Ricardo sobre el commit publicado.
-9. Corregir solo problemas reales y repetir la evaluación si cambia la entrega.
-10. Verificar el repositorio en GitHub y entregar antes de la fecha límite.
+8. Verificar el repositorio en GitHub y entregar antes de la fecha límite.
 
